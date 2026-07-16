@@ -23,13 +23,13 @@ def send_message(data):
         "Content-Type": "application/json"
     }
 
- response = requests.post(
-    GRAPH_URL,
-    headers=headers,
-    json=data
-)
+    response = requests.post(
+        GRAPH_URL,
+        headers=headers,
+        json=data
+    )
 
-print(response.text)
+    print(response.text)
 
 
 # ارسال پیام متنی
