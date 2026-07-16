@@ -4,303 +4,560 @@ import os
 
 app = Flask(__name__)
 
+
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
 WHATSAPP_TOKEN = os.environ.get("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.environ.get("PHONE_NUMBER_ID")
 
+
 GRAPH_URL = f"https://graph.facebook.com/v25.0/{PHONE_NUMBER_ID}/messages"
 
 
-def send_message(to, data):
+
+# ارسال پیام به واتساپ
+
+def send_message(data):
 
     headers = {
         "Authorization": f"Bearer {WHATSAPP_TOKEN}",
         "Content-Type": "application/json"
     }
 
-    requests.post(
-        GRAPH_URL,
-        headers=headers,
-        json=data
-    )
+ response = requests.post(
+    GRAPH_URL,
+    headers=headers,
+    json=data
+)
+
+print(response.text)
 
 
-# تایید واتساپ
+# ارسال پیام متنی
+
+def send_text(phone, text):
+
+    data = {
+
+        "messaging_product": "whatsapp",
+        "to": phone,
+        "type": "text",
+
+        "text": {
+            "body": text
+        }
+
+    }
+
+    send_message(data)
+
+
+
+
+# تایید Webhook
+
 @app.route("/webhook", methods=["GET"])
+
 def verify_webhook():
 
     mode = request.args.get("hub.mode")
     token = request.args.get("hub.verify_token")
     challenge = request.args.get("hub.challenge")
 
+
     if mode == "subscribe" and token == VERIFY_TOKEN:
+
         return challenge
 
-    return "Verification failed", 403
+
+    return "Verification failed",403
 
 
 
-# پیام دکمه‌ای اصلی
-def main_menu(to):
+
+
+# منوی اصلی
+
+def main_menu(phone):
+
 
     data = {
-        "messaging_product": "whatsapp",
-        "to": to,
-        "type": "interactive",
-        "interactive": {
-            "type": "button",
-            "body": {
-                "text": "🌿 به درخشان گروپ خوش آمدید\n\nلطفاً گزینه مورد نظر را انتخاب کنید:"
+
+
+        "messaging_product":"whatsapp",
+
+        "to":phone,
+
+        "type":"interactive",
+
+
+        "interactive":{
+
+
+            "type":"list",
+
+
+            "body":{
+
+                "text":
+"""
+🌿 به درخشان گروپ خوش آمدید
+
+لطفاً بخش مورد نظر خود را انتخاب نمایید:
+"""
+
             },
-            "action": {
-                "buttons": [
+
+
+            "action":{
+
+
+                "button":"مشاهده منو",
+
+
+                "sections":[
+
+
                     {
-                        "type": "reply",
-                        "reply": {
-                            "id": "products",
-                            "title": "📦 محصولات"
-                        }
-                    },
-                    {
-                        "type": "reply",
-                        "reply": {
-                            "id": "sales",
-                            "title": "🏪 فروشات"
-                        }
-                    },
-                    {
-                        "type": "reply",
-                        "reply": {
-                            "id": "contact",
-                            "title": "☎️ تماس"
-                        }
+
+                    "title":"خدمات درخشان گروپ",
+
+                    "rows":[
+
+
+                        {
+                        "id":"products",
+                        "title":"📦 محصولات",
+                        "description":"کود، پنبه و محصولات زراعتی"
+                        },
+
+
+                        {
+                        "id":"sales",
+                        "title":"🏪 محل فروشات",
+                        "description":"نمایندگی‌ها و مراکز فروش"
+                        },
+
+
+                        {
+                        "id":"experts",
+                        "title":"🌱 کارشناسان زراعتی",
+                        "description":"مشاوره تخصصی"
+                        },
+
+
+                        {
+                        "id":"contact",
+                        "title":"☎️ تماس با ما",
+                        "description":"ارتباط با درخشان گروپ"
+                        },
+
+
+                    ]
+
                     }
+
+
                 ]
+
             }
+
         }
+
     }
 
-    send_message(to, data)
 
+    send_message(data)
+
+
+
+
+
+# دریافت پیام‌ها
 
 
 @app.route("/webhook", methods=["POST"])
+
 def webhook():
 
-    data = request.get_json()
+    data=request.get_json()
+
 
     try:
 
-        message = data["entry"][0]["changes"][0]["value"]["messages"][0]
 
-        phone = message["from"]
+        message=data["entry"][0]["changes"][0]["value"]["messages"][0]
 
 
-        # اگر پیام متنی باشد
+        phone=message["from"]
+
+
+
+        # پیام متنی
+
         if "text" in message:
 
-            text = message["text"]["body"].lower()
 
-            if "سلام" in text or "hi" in text or "hello" in text:
+            text=message["text"]["body"].lower()
+
+
+
+            if (
+                "سلام" in text
+                or "hello" in text
+                or "hi" in text
+            ):
+
                 main_menu(phone)
 
 
-        # اگر دکمه انتخاب شود
+
+        # انتخاب از منو
+
+
         elif "interactive" in message:
 
-            interactive = message["interactive"]
 
-            if "button_reply" in interactive:
+            interactive=message["interactive"]
 
-                button_id = interactive["button_reply"]["id"]
 
-                handle_button(phone, button_id)
 
+            if "list_reply" in interactive:
+
+
+                button_id=interactive["list_reply"]["id"]
+
+
+                handle_button(
+                    phone,
+                    button_id
+                )
 
     except Exception as e:
+
         print(e)
 
 
     return "OK", 200
 
-
-
 def handle_button(phone, button_id):
 
 
-    # منوی محصولات
+    # محصولات
+
     if button_id == "products":
 
+
         data = {
-            "messaging_product": "whatsapp",
-            "to": phone,
-            "type": "interactive",
-            "interactive": {
-                "type": "button",
-                "body": {
-                    "text": "📦 محصولات درخشان گروپ\n\nلطفاً محصول مورد نظر را انتخاب کنید:"
+
+            "messaging_product":"whatsapp",
+            "to":phone,
+            "type":"interactive",
+
+            "interactive":{
+
+                "type":"list",
+
+                "body":{
+
+                    "text":
+"""
+📦 محصولات درخشان گروپ
+
+محصول مورد نظر را انتخاب کنید:
+"""
+
                 },
-                "action": {
-                    "buttons": [
+
+
+                "action":{
+
+                    "button":"محصولات",
+
+                    "sections":[
+
                         {
-                            "type": "reply",
-                            "reply": {
-                                "id": "humic",
-                                "title": "🌿 هیومیک اسید"
-                            }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "npk",
-                                "title": "🌱 NPK"
-                            }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "cotton",
-                                "title": "🧵 پنبه"
-                            }
+
+                        "title":"محصولات زراعتی",
+
+                        "rows":[
+
+
+                            {
+                            "id":"humic",
+                            "title":"🌿 هیومیک اسید",
+                            "description":"کود ارگانیک تقویت خاک و ریشه"
+                            },
+
+
+                            {
+                            "id":"npk",
+                            "title":"🌱 کود NPK",
+                            "description":"تغذیه کامل گیاه"
+                            },
+
+
+                            {
+                            "id":"cotton",
+                            "title":"🧵 پنبه پروسس شده",
+                            "description":"پنبه با کیفیت صادراتی"
+                            },
+
+
+                            {
+                            "id":"lab",
+                            "title":"🔬 خدمات لابراتوار",
+                            "description":"آزمایش خاک و محصولات"
+                            },
+
+
+                        ]
+
                         }
+
                     ]
+
                 }
+
             }
+
         }
 
-        send_message(phone, data)
+
+        send_message(data)
 
 
 
     # هیومیک اسید
 
-    elif button_id == "humic":
 
-        text = """
+    elif button_id=="humic":
+
+
+        send_text(phone,
+
+"""
 🌿 کود فوق العاده هیومیک اسید
 
-هیومیک اسید یک کود ارگانیک مؤثر برای بهبود ساختمان خاک، تقویت ریشه و افزایش جذب مواد غذایی می‌باشد.
+
+هیومیک اسید یک کود مؤثر برای بهبود ساختمان خاک، تقویت ریشه و افزایش جذب مواد غذایی گیاه می‌باشد.
+
 
 ✅ فواید:
-• تقویت ریشه
-• افزایش جذب مواد غذایی
+
+• تقویت رشد ریشه
+• افزایش جذب کودها
 • بهبود حاصل‌خیزی خاک
 • افزایش کیفیت محصولات
 
+
 📦 بسته‌بندی:
-5 لیتر
-10 لیتر
-20 لیتر
+
+۵ لیتر
+۱۰ لیتر
+۲۰ لیتر
+
 
 💰 قیمت:
-5 لیتر: 500 افغانی
-10 لیتر: 900 افغانی
-20 لیتر: 1800 افغانی
-"""
 
-        send_text(phone, text)
+۵ لیتر: ۵۰۰ افغانی
+
+۱۰ لیتر: ۹۰۰ افغانی
+
+۲۰ لیتر: ۱۸۰۰ افغانی
+
+
+برای معلومات بیشتر با کارشناسان ما تماس بگیرید.
+"""
+)
 
 
 
     # NPK
 
-    elif button_id == "npk":
 
-        text = """
+    elif button_id=="npk":
+
+
+        send_text(phone,
+
+"""
 🌱 کود فوق العاده NPK
 
-کود کامل برای تأمین عناصر غذایی مورد نیاز گیاه.
+
+کود کامل برای تأمین عناصر ضروری گیاه.
+
 
 ✅ فواید:
+
 • رشد بهتر گیاه
 • تقویت ریشه
-• افزایش کیفیت محصول
+• افزایش حاصل‌دهی
+• بهبود کیفیت محصول
+
 
 📦 بسته‌بندی:
-1 لیتر
+
+۱ لیتر
+
 
 💰 قیمت:
-200 افغانی
-"""
 
-        send_text(phone, text)
+۲۰۰ افغانی
+"""
+)
 
 
 
     # پنبه
 
-    elif button_id == "cotton":
 
-        text = """
+    elif button_id=="cotton":
+
+
+        send_text(phone,
+
+"""
 🧵 پنبه پروسس شده درخشان گروپ
 
-پنبه با استفاده از ماشین‌آلات مدرن پروسس شده و برای صنایع نساجی آماده می‌گردد.
+
+پنبه درخشان گروپ با ماشین‌آلات مدرن و تکنالوژی پیشرفته پروسس شده و برای صنایع نساجی آماده می‌گردد.
+
 
 ✅ کیفیت عالی
-✅ الیاف یک‌دست
-✅ مناسب صادرات
-"""
 
-        send_text(phone, text)
+✅ الیاف یک‌دست
+
+✅ مناسب برای صنایع نساجی و صادرات
+"""
+)
+
+
+
+    # لابراتوار
+
+
+    elif button_id=="lab":
+
+
+        send_text(phone,
+
+"""
+🔬 خدمات لابراتوار درخشان گروپ
+
+
+خدمات تخصصی شامل:
+
+
+✅ آزمایش خاک
+
+✅ آزمایش کودهای زراعتی
+
+✅ آزمایش تخم‌ها
+
+✅ بررسی کیفیت محصولات
+
+
+ارائه نتایج دقیق و علمی برای رشد بهتر زراعت.
+"""
+)
 
 
 
     # فروشات
 
-    elif button_id == "sales":
 
-        text = """
+    elif button_id=="sales":
+
+
+        send_text(phone,
+
+"""
 🏪 محل فروشات درخشان گروپ
 
-لطفاً ولایت خود را انتخاب کنید:
+
+برای دریافت نزدیک‌ترین مرکز فروش، ولایت خود را ارسال کنید.
+
 
 📍 بلخ
+
 📍 فاریاب
-📍 بغلان
+
 📍 کندز
+
+📍 بغلان
+
 📍 هلمند
+
 📍 ننگرهار
 """
+)
 
-        send_text(phone, text)
+
+
+    # کارشناسان
+
+
+    elif button_id=="experts":
+
+
+        send_text(phone,
+
+"""
+🌱 کارشناسان زراعتی درخشان گروپ
+
+
+👨‍🌾 انجینر محمد یاسین عزیزی
+
+(لابراتوار و خاک‌شناسی)
+
+
+👨‍🌾 انجینر فیض محمد خان
+
+(مشاوره کشت و زراعت)
+
+
+👨‍🌾 انجینر سید اسرار سادات
+
+(حل مشکلات مزارع)
+
+
+برای مشاوره با ما تماس بگیرید.
+"""
+)
 
 
 
     # تماس
 
-    elif button_id == "contact":
 
-        text = """
+    elif button_id=="contact":
+
+
+        send_text(phone,
+
+"""
 ☎️ تماس با درخشان گروپ
+
 
 کارشناسان ما آماده پاسخگویی هستند.
 
+
 واتساپ:
+
 +93786470833
 
-درخواست قیمت و نمایندگی را ارسال کنید.
+
+برای قیمت، نمایندگی و همکاری تجارتی پیام دهید.
 """
-
-        send_text(phone, text)
-
+)
 
 
-def send_text(to, text):
-
-    data = {
-        "messaging_product": "whatsapp",
-        "to": to,
-        "type": "text",
-        "text": {
-            "body": text
-        }
-    }
-
-    send_message(to, data)
+@app.route("/")
+def home():
+    return "Durakhshan WhatsApp Bot is Running!"
 
 
-
-if __name__ == "__main__":
+if __name__=="__main__":
 
     app.run(
         host="0.0.0.0",
