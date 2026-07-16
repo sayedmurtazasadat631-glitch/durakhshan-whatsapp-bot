@@ -1,7 +1,7 @@
 from flask import Flask, request
 import requests
 import os
-
+from products import products
 app = Flask(__name__)
 
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
@@ -65,18 +65,18 @@ def webhook():
 4️⃣ نمایندگی فروش
 5️⃣ تماس با کارشناسان
 """
+elif text == "1":
+    reply = """
+📦 محصولات درخشان گروپ
 
-        elif text == "1":
-            reply = """
-🌱 محصولات درخشان گروپ:
+لطفاً دسته محصول را انتخاب کنید:
 
-• DAP 18-46-0
-• UREA 46%
-• NPK
-• Humic Acid
+1️⃣ کود فوق العاده هیومیک اسید
+2️⃣ کود فوق العاده NPK
 
-برای قیمت با ما تماس بگیرید.
+0️⃣ بازگشت
 """
+
 
         elif text == "2":
             reply = """
