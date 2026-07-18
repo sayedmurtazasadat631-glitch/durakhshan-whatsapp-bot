@@ -809,6 +809,7 @@ https://wa.me/93788333888?text=سفارش {name}
 
     }
 
+    print("SENDING PRODUCT:", data)
 
     send_message(data)
 
