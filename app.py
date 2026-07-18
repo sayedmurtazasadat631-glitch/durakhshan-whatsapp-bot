@@ -397,11 +397,12 @@ def handle_button(phone, button_id):
 
     elif button_id=="humic5":
 
-        send_product(
-            phone,
-            "humic5.png",
-            "🌿 هیومیک اسید 5 لیتری",
-            "500 افغانی"
+elif button_id=="humic5":
+
+    send_text(
+        phone,
+        "تست ۵ لیتری فعال شد ✅"
+    )
         )
 
 
