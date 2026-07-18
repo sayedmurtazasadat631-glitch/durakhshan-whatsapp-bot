@@ -773,8 +773,6 @@ https://wa.me/93788333888
 """
 )
 
-def send_product(phone, image, name, price):
-
 
 def send_product(phone, image, name, price):
 
