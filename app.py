@@ -395,13 +395,12 @@ def handle_button(phone, button_id):
         send_message(data)
 
 
-elif button_id=="humic5":
+    elif button_id=="humic5":
 
-    send_text(
-        phone,
-        "تست ۵ لیتری فعال شد ✅"
-    )
-        
+        send_text(
+            phone,
+            "تست ۵ لیتری فعال شد ✅"
+        ) 
 
 
     elif button_id=="humic10":
