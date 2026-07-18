@@ -358,26 +358,26 @@ def handle_button(phone, button_id):
 
                         {
 
-                        "title":"بسته‌بندی‌ها",
+                        "title":"بسته‌ بندی‌ها",
 
                         "rows":[
 
                             {
                             "id":"humic5",
                             "title":"🌿 5 لیتری",
-                            "description":"500 افغانی"
+                            "description":"کود فوق العاده"
                             },
 
                             {
                             "id":"humic10",
                             "title":"🌿 10 لیتری",
-                            "description":"900 افغانی"
+                            "description":"کود فوق العاده"
                             },
 
                             {
                             "id":"humic20",
                             "title":"🌿 20 لیتری",
-                            "description":"1800 افغانی"
+                            "description":"کود فوق العاده"
                             }
 
                         ]
@@ -775,38 +775,36 @@ https://wa.me/93788333888
 
 def send_product(phone, image, name, price):
 
+
+def send_product(phone, image, name, price):
+
     data = {
-
         "messaging_product": "whatsapp",
-
         "to": phone,
+        "type": "interactive",
+        "interactive": {
+            "type": "cta_url",
+            "header": {
+                "type": "image",
+                "image": {
+                    "link": f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
+                }
+            },
+            "body": {
+                "text": f"""🌿 {name}
 
-        "type": "image",
+💰 قیمت: {price}
 
-        "image": {
+کود فوق العاده درخشان گروپ
 
-            "link":
-            f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}",
-
-
-            "caption":
-f"""
-{name}
-
-🌿 کود فوق العاده درخشان گروپ
-
-💰 قیمت:
-{price}
-
-
-🛒 سفارش محصول:
-
-برای سفارش کلیک کنید:
-https://wa.me/93788333888?text=سفارش {name}
-"""
-        }
-
-    }
+جهت ثبت سفارش روی دکمه زیر کلیک نمایید."""
+            },
+            "action": {
+                "name": "cta_url",
+                "parameters": {
+                    "display_text": "🛒 سفارش محصول",
+                    "url": f"https://wa.me/93701660911?text=سلام، میخواهم {name} را سفارش دهم."
+                }
 
     print("SENDING PRODUCT:", data)
 
