@@ -803,12 +803,11 @@ def send_product(phone, image, name, price):
                     "display_text": "🛒 سفارش محصول",
                     "url": f"https://wa.me/93701660911?text=سلام، میخواهم {name} را سفارش دهم."
                 }
+            }
+        }
+    }
 
     print("SENDING PRODUCT:", data)
-
-    print("IMAGE LINK:")
-    print(data["image"]["link"])
-
     send_message(data)
 
 @app.route("/")
