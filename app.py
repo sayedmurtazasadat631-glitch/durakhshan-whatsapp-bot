@@ -397,12 +397,12 @@ def handle_button(phone, button_id):
 
     elif button_id=="humic5":
 
-    send_product(
-        phone,
-        "humic5.png",
-        "🌿 هیومیک اسید 5 لیتری",
-        "500 افغانی"
-    )
+        send_product(
+            phone,
+            "humic5.png",
+            "🌿 هیومیک اسید ۵ لیتری",
+            "500 افغانی"
+        )
 
 
     elif button_id=="humic10":
@@ -410,7 +410,7 @@ def handle_button(phone, button_id):
         send_product(
             phone,
             "humic10.png",
-            "🌿 هیومیک اسید 10 لیتری",
+            "🌿 هیومیک اسید ۱۰ لیتری",
             "900 افغانی"
         )
 
@@ -420,10 +420,9 @@ def handle_button(phone, button_id):
         send_product(
             phone,
             "humic20.png",
-            "🌿 هیومیک اسید 20 لیتری",
+            "🌿 هیومیک اسید ۲۰ لیتری",
             "1800 افغانی"
         )
-
     
     # NPK
 
@@ -810,6 +809,9 @@ https://wa.me/93788333888?text=سفارش {name}
     }
 
     print("SENDING PRODUCT:", data)
+
+    print("IMAGE LINK:")
+    print(data["image"]["link"])
 
     send_message(data)
 
