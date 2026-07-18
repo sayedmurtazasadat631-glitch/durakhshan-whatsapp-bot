@@ -329,49 +329,102 @@ def handle_button(phone, button_id):
 
     # هیومیک اسید
 
-
     elif button_id=="humic":
 
+        data = {
 
-        send_text(phone,
+            "messaging_product":"whatsapp",
+            "to":phone,
+            "type":"interactive",
 
+            "interactive":{
+
+                "type":"list",
+
+                "body":{
+                    "text":
 """
-🌿 کود فوق العاده هیومیک اسید
+🌿 هیومیک اسید فوق العاده
 
-
-هیومیک اسید یک کود مؤثر برای بهبود ساختمان خاک، تقویت ریشه و افزایش جذب مواد غذایی گیاه می‌باشد.
-
-
-✅ فواید:
-
-• تقویت رشد ریشه
-• افزایش جذب کودها
-• بهبود حاصل‌خیزی خاک
-• افزایش کیفیت محصولات
-
-
-📦 بسته‌بندی:
-
-۵ لیتر
-۱۰ لیتر
-۲۰ لیتر
-
-
-💰 قیمت:
-
-۵ لیتر: ۵۰۰ افغانی
-
-۱۰ لیتر: ۹۰۰ افغانی
-
-۲۰ لیتر: ۱۸۰۰ افغانی
-
-
-برای معلومات بیشتر با کارشناسان ما تماس بگیرید.
+لطفاً سایز محصول را انتخاب کنید:
 """
-)
+                },
+
+                "action":{
+
+                    "button":"انتخاب سایز",
+
+                    "sections":[
+
+                        {
+
+                        "title":"بسته‌بندی‌ها",
+
+                        "rows":[
+
+                            {
+                            "id":"humic5",
+                            "title":"🌿 5 لیتری",
+                            "description":"500 افغانی"
+                            },
+
+                            {
+                            "id":"humic10",
+                            "title":"🌿 10 لیتری",
+                            "description":"900 افغانی"
+                            },
+
+                            {
+                            "id":"humic20",
+                            "title":"🌿 20 لیتری",
+                            "description":"1800 افغانی"
+                            }
+
+                        ]
+
+                        }
+
+                    ]
+
+                }
+
+            }
+
+        }
+
+        send_message(data)
 
 
+    elif button_id=="humic5":
 
+        send_product(
+            phone,
+            "humic5.png",
+            "🌿 هیومیک اسید 5 لیتری",
+            "500 افغانی"
+        )
+
+
+    elif button_id=="humic10":
+
+        send_product(
+            phone,
+            "humic10.png",
+            "🌿 هیومیک اسید 10 لیتری",
+            "900 افغانی"
+        )
+
+
+    elif button_id=="humic20":
+
+        send_product(
+            phone,
+            "humic20.png",
+            "🌿 هیومیک اسید 20 لیتری",
+            "1800 افغانی"
+        )
+
+    
     # NPK
 
 
@@ -721,6 +774,43 @@ https://wa.me/93788333888
 """
 )
 
+def send_product(phone, image, name, price):
+
+    data = {
+
+        "messaging_product": "whatsapp",
+
+        "to": phone,
+
+        "type": "image",
+
+        "image": {
+
+            "link":
+            f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}",
+
+
+            "caption":
+f"""
+{name}
+
+🌿 کود فوق العاده درخشان گروپ
+
+💰 قیمت:
+{price}
+
+
+🛒 سفارش محصول:
+
+برای سفارش کلیک کنید:
+https://wa.me/93788333888?text=سفارش {name}
+"""
+        }
+
+    }
+
+
+    send_message(data)
 
 @app.route("/")
 def home():
