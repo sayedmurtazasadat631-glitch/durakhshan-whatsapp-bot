@@ -427,15 +427,14 @@ def handle_button(phone, button_id):
     # NPK
 
 
-elif button_id=="npk":
+    elif button_id=="npk":
 
-    send_product(
-        phone,
-        "NPK.png",
-        "🌱 کود فوق العاده NPK",
-        "۲۰۰ افغانی"
-    )
-
+        send_product(
+            phone,
+            "NPK.png",
+            "🌱 کود فوق العاده NPK",
+            "۲۰۰ افغانی"
+        )
 
 
     # پنبه
