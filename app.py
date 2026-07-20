@@ -502,18 +502,69 @@ def handle_button(phone, button_id):
 
     # فروشات
 
+    # فروشات
+
     elif button_id == "sales":
 
-        send_text(
-            phone,
-            """
-🏪 محل فروشات درخشان گروپ
+        data = {
 
-برای سفارش و معلومات با دفتر مرکزی تماس بگیرید:
+            "messaging_product": "whatsapp",
 
-📞 +93704012659
-"""
-        )
+            "to": phone,
+
+            "type": "interactive",
+
+            "interactive": {
+
+                "type": "list",
+
+                "body": {
+                    "text": "🏪 لطفاً محل فروش مورد نظر را انتخاب نمایید."
+                },
+
+                "action": {
+
+                    "button": "انتخاب محل",
+
+                    "sections": [
+
+                        {
+
+                            "title": "مراکز فروش",
+
+                            "rows": [
+
+                                {
+                                    "id": "jalalabad",
+                                    "title": "جلال‌آباد",
+                                    "description": "داکتر امرالله صافی"
+                                },
+
+                                {
+                                    "id": "faryab",
+                                    "title": "فاریاب",
+                                    "description": "حاجی محب الله"
+                                },
+
+                                {
+                                    "id": "kunduz",
+                                    "title": "کندز",
+                                    "description": "قاری شکرالله"
+                                }
+
+                            ]
+
+                        }
+
+                    ]
+
+                }
+
+            }
+
+        }
+
+        send_message(data)
 
 
 
