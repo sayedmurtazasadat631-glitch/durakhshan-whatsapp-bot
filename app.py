@@ -778,27 +778,23 @@ https://wa.me/93788038543
 
     # تماس
 
-
     elif button_id=="contact":
 
-
-        send_text(phone,
-
-"""
+        send_text(
+            phone,
+            """
 ☎️ تماس با درخشان گروپ
-
 
 کارشناسان ما آماده پاسخگویی هستند.
 
+📲 واتساپ:
+https://wa.me/93701660911
 
-واتساپ:
-https://wa.me/93788333888
-+93788333888
-
+📞 +93701660911
 
 برای قیمت، نمایندگی و همکاری تجارتی پیام دهید.
 """
-)
+        )
 
 
 def send_product(phone, image, name, price):
@@ -879,7 +875,7 @@ def send_expert(phone,image,name,province,specialty,whatsapp):
 
     }
 
-        send_message(data)
+    send_message(data)
 
 @app.route("/")
 def home():
