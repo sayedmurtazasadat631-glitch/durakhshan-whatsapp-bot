@@ -23,7 +23,13 @@ def init_db():
 
         product TEXT,
 
-        date TEXT
+        date TEXT,
+
+        day TEXT,
+
+        month TEXT,
+
+        year TEXT
 
     )
     """)
@@ -42,6 +48,8 @@ init_db()
 
 def save_order(phone, product):
 
+    now = datetime.now()
+
     conn = sqlite3.connect("orders.db")
 
     cursor = conn.cursor()
@@ -49,15 +57,18 @@ def save_order(phone, product):
     cursor.execute(
         """
         INSERT INTO orders
-        (phone, product, date)
+        (phone, product, date, day, month, year)
 
-        VALUES (?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
         """,
 
         (
             phone,
             product,
-            datetime.now().strftime("%Y-%m-%d %H:%M")
+            now.strftime("%Y-%m-%d %H:%M"),
+            now.strftime("%Y-%m-%d"),
+            now.strftime("%Y-%m"),
+            now.strftime("%Y")
         )
     )
 
