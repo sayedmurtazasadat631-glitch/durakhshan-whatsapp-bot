@@ -179,8 +179,10 @@ DG به شرکت درخشان گروپ خوش آمدید
 
 def webhook():
 
-    data=request.get_json()
+    data = request.get_json()
 
+    print("FULL MESSAGE:")
+    print(data)
 
     try:
 
@@ -241,6 +243,7 @@ def webhook():
 
 def handle_button(phone, button_id):
 
+    print("BUTTON CLICKED:", button_id)
 
     # محصولات
 
@@ -924,7 +927,7 @@ def send_sales(phone, name, location, whatsapp, image=None):
 
                     "display_text":"💬 تماس واتساپ",
 
-                    "url":"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم."
+                    "url":"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم"
 
                 }
 
