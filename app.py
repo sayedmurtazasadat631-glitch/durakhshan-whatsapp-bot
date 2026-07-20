@@ -502,99 +502,20 @@ def handle_button(phone, button_id):
 
     # فروشات
 
-    elif button_id == "sales":
+elif button_id == "sales":
 
-        data = {
+    print("SALES MENU CLICKED")
 
-            "messaging_product": "whatsapp",
+    send_text(
+        phone,
+        """
+🏪 محل فروشات درخشان گروپ
 
-            "to": phone,
+برای سفارش و معلومات با دفتر مرکزی تماس بگیرید:
 
-            "type": "interactive",
-
-            "interactive": {
-
-                "type": "list",
-
-                "body": {
-
-                    "text": "🏭 لطفاً محل فروش نزدیک خود را انتخاب نمایید."
-
-                },
-
-                "action": {
-
-                    "button": "انتخاب محل",
-
-                    "sections": [
-
-                        {
-
-                            "title": "مراکز فروش درخشان گروپ",
-
-                            "rows": [
-
-                                {
-                                    "id": "jalalabad",
-                                    "title": "داکتر امرالله صافی",
-                                    "description": "ولایت جلال‌آباد"
-                                },
-
-                                {
-                                    "id": "faryab",
-                                    "title": "حاجی محب الله و امین الله راز",
-                                    "description": "ولایت فاریاب"
-                                },
-
-                                {
-                                    "id": "kunduz",
-                                    "title": "قاری شکرالله خان",
-                                    "description": "ولایت کندز"
-                                },
-
-                                {
-                                    "id": "charbolak",
-                                    "title": "نقیب الله وزیری",
-                                    "description": "ولسوالی چهاربولک"
-                                },
-
-                                {
-                                    "id": "mazar",
-                                    "title": "آرین شراف",
-                                    "description": "شهر مزارشریف، ولایت بلخ"
-                                },
-
-                                {
-                                    "id": "helmand",
-                                    "title": "عبدالله هلمندی",
-                                    "description": "ولایت هلمند"
-                                },
-
-                                {
-                                    "id": "baghlan",
-                                    "title": "ضیالحق بغلان",
-                                    "description": "ولایت بغلان"
-                                },
-
-                                {
-                                    "id": "dawlatabad",
-                                    "title": "پیر محمد",
-                                    "description": "دولت‌آباد، ولایت فاریاب"
-                                }
-
-                            ]
-
-                        }
-
-                    ]
-
-                }
-
-            }
-
-        }
-
-
+📞 +93704012659
+"""
+    )
         send_message(data)
 
 
