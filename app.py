@@ -682,6 +682,92 @@ def handle_button(phone, button_id):
             None
         )
 
+def send_sales(phone, name, location, whatsapp, image=None):
+
+    print("SALES BUTTON CLICKED:", name)
+
+
+    if image:
+
+        header = {
+
+            "type":"image",
+
+            "image":{
+
+                "link":f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
+
+            }
+
+        }
+
+
+    else:
+
+        header = None
+
+
+
+    data = {
+
+        "messaging_product":"whatsapp",
+
+        "to":phone,
+
+        "type":"interactive",
+
+        "interactive":{
+
+            "type":"cta_url",
+
+            "body":{
+
+                "text":f"""🏪 مرکز فروش درخشان گروپ
+
+
+👤 مسئول فروش:
+{name}
+
+
+📍 آدرس:
+{location}
+
+
+برای معلومات و سفارش کود درخشان گروپ روی دکمه زیر کلیک نمایید."""
+
+            },
+
+
+            "action":{
+
+                "name":"cta_url",
+
+                "parameters":{
+
+                    "display_text":"💬 تماس واتساپ",
+
+                    "url":"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم"
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+    if header:
+
+        data["interactive"]["header"] = header
+
+
+
+    print("SENDING SALES:", data)
+
+
+    send_message(data)
 
 
 
@@ -863,93 +949,6 @@ https://wa.me/93701660911
 """
         )
 
-
-def send_sales(phone, name, location, whatsapp, image=None):
-
-    print("SALES BUTTON CLICKED:", name)
-
-
-    if image:
-
-        header = {
-
-            "type":"image",
-
-            "image":{
-
-                "link":f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
-
-            }
-
-        }
-
-
-    else:
-
-        header = None
-
-
-
-    data = {
-
-        "messaging_product":"whatsapp",
-
-        "to":phone,
-
-        "type":"interactive",
-
-        "interactive":{
-
-            "type":"cta_url",
-
-            "body":{
-
-                "text":f"""🏪 مرکز فروش درخشان گروپ
-
-
-👤 مسئول فروش:
-{name}
-
-
-📍 آدرس:
-{location}
-
-
-برای معلومات و سفارش کود درخشان گروپ روی دکمه زیر کلیک نمایید."""
-
-            },
-
-
-            "action":{
-
-                "name":"cta_url",
-
-                "parameters":{
-
-                    "display_text":"💬 تماس واتساپ",
-
-                    "url":"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم"
-
-                }
-
-            }
-
-        }
-
-    }
-
-
-
-    if header:
-
-        data["interactive"]["header"] = header
-
-
-
-    print("SENDING SALES:", data)
-
-
-    send_message(data)
 
 
 
