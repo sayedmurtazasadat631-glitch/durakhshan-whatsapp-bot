@@ -228,16 +228,27 @@ def webhook():
 
             if "list_reply" in interactive:
 
-
                 button_id = interactive["list_reply"]["id"]
-                
+
                 print("BUTTON ID:", button_id)
 
-                
                 handle_button(
                     phone,
                     button_id
                 )
+
+
+            elif "button_reply" in interactive:
+
+                button_id = interactive["button_reply"]["id"]
+
+                print("BUTTON ID:", button_id)
+
+                handle_button(
+                    phone,
+                    button_id
+                )
+
 
     except Exception as e:
 
@@ -501,8 +512,6 @@ def handle_button(phone, button_id):
 
 
 
-    # فروشات
-
     elif button_id == "sales":
 
         data = {
@@ -516,79 +525,37 @@ def handle_button(phone, button_id):
                 "type": "list",
 
                 "body": {
-                    "text": "🏪 لطفاً محل فروش مورد نظر را انتخاب نمایید."
+
+                    "text": """
+🏪 محل فروشات درخشان گروپ
+
+لطفاً نوع مرکز مورد نظر را انتخاب نمایید:
+"""
+
                 },
 
                 "action": {
 
-                    "button": "انتخاب محل",
+                    "button": "انتخاب",
 
                     "sections": [
 
                         {
-                            "title": "مراکز فروش",
+
+                            "title": "نوع مرکز",
 
                             "rows": [
 
                                 {
-                                    "id": "jalalabad",
-                                    "title": "جلال‌آباد",
+                                    "id": "factories",
+                                    "title": "🏭 فابریکه‌ها",
+                                    "description": "آدرس فابریکه‌های درخشان گروپ"
                                 },
 
                                 {
-                                    "id": "faryab",
-                                    "title": "فاریاب",
-                                },
-
-                                {
-                                    "id": "kunduz",
-                                    "title": "کندز",
-                                    "description": "قاری شکرالله"
-                                },
-
-                                {
-                                    "id": "mazar",
-                                    "title": "مزارشریف",
-                                },
-
-                                {
-                                    "id": "charbolak",
-                                    "title": "چهاربولک",
-                                },
-
-                                {
-                                    "id": "dawlatabad",
-                                    "title": "دولت‌آباد",
-                                },
-
-                                {
-                                    "id": "baghlan",
-                                    "title": "بغلان",
-                                },
-
-                                {
-                                    "id": "helmand",
-                                    "title": "هلمند",
-                                },
-
-                                {
-                                    "id": "factory_balkh2",
-                                    "title": "🏭 درخشان نمبر 2 بلخ",
-                                },
-
-                                {
-                                    "id": "factory_helmand4",
-                                    "title": "🏭 درخشان نمبر 4 هلمند",
-                                },
-
-                                {
-                                    "id": "factory_balkh1",
-                                    "title": "🏭 درخشان نمبر 1 بلخ",
-                                },
-
-                                {
-                                    "id": "factory_balkh3",
-                                    "title": "🏭 درخشان نمبر 3 بلخ",
+                                    "id": "branches",
+                                    "title": "🏪 نمایندگی‌ها",
+                                    "description": "مراکز فروش در ولایات"
                                 }
 
                             ]
@@ -606,7 +573,180 @@ def handle_button(phone, button_id):
         send_message(data)
 
 
+    # فابریکه‌ها
 
+    elif button_id == "factories":
+
+        data = {
+
+            "messaging_product": "whatsapp",
+            "to": phone,
+            "type": "interactive",
+
+            "interactive": {
+
+                "type": "list",
+
+                "body": {
+
+                    "text": """
+🏭 فابریکه‌های درخشان گروپ
+
+لطفاً فابریکه مورد نظر را انتخاب نمایید:
+"""
+
+                },
+
+                "action": {
+
+                    "button": "انتخاب فابریکه",
+
+                    "sections": [
+
+                        {
+
+                            "title": "فابریکه‌ها",
+
+                            "rows": [
+
+                                {
+                                    "id": "factory_balkh2",
+                                    "title": "🏭 درخشان نمبر 2 بلخ",
+                                    "description": "شاهراه مزار-شبرغان، بلخ افغانستان"
+                                },
+
+                                {
+                                    "id": "factory_helmand4",
+                                    "title": "🏭 درخشان نمبر 4 هلمند",
+                                    "description": "سرک نادعلی، منطقه جمپ پوسته بولان هلمند"
+                                },
+
+                                {
+                                    "id": "factory_balkh1",
+                                    "title": "🏭 درخشان نمبر 1 بلخ",
+                                    "description": "شاهراه مزارشبرغان، چهارسرکه ولسوالی بلخ"
+                                },
+
+                                {
+                                    "id": "factory_balkh3",
+                                    "title": "🏭 درخشان نمبر 3 بلخ",
+                                    "description": "شاهراه مزار، ولسوالی بلخ، باغ اوراق"
+                                }
+
+                            ]
+
+                        }
+
+                    ]
+
+                }
+
+            }
+
+        }
+
+        send_message(data)
+
+
+    # نمایندگی‌ها
+
+    elif button_id == "branches":
+
+        data = {
+
+            "messaging_product": "whatsapp",
+            "to": phone,
+            "type": "interactive",
+
+            "interactive": {
+
+                "type": "list",
+
+                "body": {
+
+                    "text": """
+🏪 نمایندگی‌ها و مراکز فروش درخشان گروپ
+
+لطفاً ولایت مورد نظر را انتخاب نمایید:
+"""
+
+                },
+
+                "action": {
+
+                    "button": "انتخاب ولایت",
+
+                    "sections": [
+
+                        {
+
+                            "title": "نمایندگی‌ها",
+
+                            "rows": [
+
+                                {
+                                    "id": "jalalabad",
+                                    "title": "جلال‌آباد",
+                                    "description": "نمایندگی فروش"
+                                },
+
+                                {
+                                    "id": "faryab",
+                                    "title": "فاریاب",
+                                    "description": "نمایندگی فروش"
+                                },
+
+                                {
+                                    "id": "kunduz",
+                                    "title": "کندز",
+                                    "description": "قاری شکرالله"
+                                },
+
+                                {
+                                    "id": "mazar",
+                                    "title": "مزارشریف",
+                                    "description": "آرین شراف"
+                                },
+
+                                {
+                                    "id": "charbolak",
+                                    "title": "چهاربولک",
+                                    "description": "نقیب الله وزیری"
+                                },
+
+                                {
+                                    "id": "dawlatabad",
+                                    "title": "دولت‌آباد",
+                                    "description": "پیر محمد"
+                                },
+
+                                {
+                                    "id": "baghlan",
+                                    "title": "بغلان",
+                                    "description": "ضیالحق بغلان"
+                                },
+
+                                {
+                                    "id": "helmand",
+                                    "title": "هلمند",
+                                    "description": "عبدالله هلمندی"
+                                }
+
+                            ]
+
+                        }
+
+                    ]
+
+                }
+
+            }
+
+        }
+
+        send_message(data)
+
+    
     elif button_id=="jalalabad":
 
         send_sales(
