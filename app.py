@@ -587,7 +587,7 @@ def handle_button(phone, button_id):
     }
 
     
-    send_message(data)
+        send_message(data)
 
 
 
@@ -600,7 +600,6 @@ def handle_button(phone, button_id):
             "+937022227922",
             None
         )
-
 
     elif button_id=="faryab":
 
@@ -856,6 +855,79 @@ https://wa.me/93701660911
 برای قیمت، نمایندگی و همکاری تجارتی پیام دهید.
 """
         )
+
+
+def send_sales(phone, name, location, whatsapp, image=None):
+
+    if image:
+
+        header = {
+            "type":"image",
+            "image":{
+                "link":f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
+            }
+        }
+
+    else:
+
+        header = None
+
+
+
+    data = {
+
+        "messaging_product":"whatsapp",
+
+        "to":phone,
+
+        "type":"interactive",
+
+        "interactive":{
+
+            "type":"cta_url",
+
+            "body":{
+
+                "text":f"""🏪 مرکز فروش درخشان گروپ
+
+
+👤 مسئول فروش:
+{name}
+
+
+📍 آدرس:
+{location}
+
+
+برای تماس مستقیم با این مرکز روی دکمه زیر کلیک نمایید."""
+
+            },
+
+            "action":{
+
+                "name":"cta_url",
+
+                "parameters":{
+
+                    "display_text":"💬 تماس واتساپ",
+
+                    "url":f"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم."
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    if header:
+
+        data["interactive"]["header"] = header
+
+
+    send_message(data)
 
 
 def send_product(phone, image, name, price):
