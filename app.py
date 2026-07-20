@@ -765,10 +765,11 @@ def send_sales(phone, name, location, whatsapp, image=None):
 
     send_message(data)
 
-    
-    # کارشناسان
 
-    elif button_id=="experts":
+
+# کارشناسان
+
+elif button_id=="experts":
 
         data = {
 
