@@ -586,97 +586,99 @@ def handle_button(phone, button_id):
 
     }
 
+    
     send_message(data)
 
 
-elif button_id=="jalalabad":
 
-    send_sales(
-        phone,
-        "داکتر امرالله صافی",
-        "ولایت جلال‌آباد، افغانستان",
-        "+937022227922",
-        None
-    )
+    elif button_id=="jalalabad":
 
-
-elif button_id=="faryab":
-
-    send_sales(
-        phone,
-        "حاجی محب الله و امین الله راز",
-        "ولایت فاریاب، افغانستان",
-        "+93786275466",
-        None
-    )
+        send_sales(
+            phone,
+            "داکتر امرالله صافی",
+            "ولایت جلال‌آباد، افغانستان",
+            "+937022227922",
+            None
+        )
 
 
-elif button_id=="kunduz":
+    elif button_id=="faryab":
 
-    send_sales(
-        phone,
-        "قاری شکرالله خان",
-        "ولایت کندز، افغانستان",
-        "+93799829245",
-        None
-    )
-
-
-elif button_id=="charbolak":
-
-    send_sales(
-        phone,
-        "نقیب الله وزیری",
-        "ولسوالی چهاربولک، افغانستان",
-        "+93778016161",
-        None
-    )
+        send_sales(
+            phone,
+            "حاجی محب الله و امین الله راز",
+            "ولایت فاریاب، افغانستان",
+            "+93786275466",
+            None
+        )
 
 
-elif button_id=="mazar":
+    elif button_id=="kunduz":
 
-    send_sales(
-        phone,
-        "آرین شراف",
-        "شهر مزارشریف، ولایت بلخ، افغانستان",
-        "+93786551516",
-        None
-    )
-
-
-elif button_id=="helmand":
-
-    send_sales(
-        phone,
-        "عبدالله هلمندی",
-        "ولایت هلمند، افغانستان",
-        "+93705513709",
-        None
-    )
+        send_sales(
+            phone,
+            "قاری شکرالله خان",
+            "ولایت کندز، افغانستان",
+            "+93799829245",
+            None
+        )
 
 
-elif button_id=="baghlan":
+    elif button_id=="charbolak":
 
-    send_sales(
-        phone,
-        "ضیالحق بغلان",
-        "ولایت بغلان، افغانستان",
-        "+93700228685",
-        None
-    )
-
-
-elif button_id=="dawlatabad":
-
-    send_sales(
-        phone,
-        "پیر محمد",
-        "ولسوالی دولت‌آباد، ولایت فاریاب، افغانستان",
-        "+93788038543",
-        None
-    )
+        send_sales(
+            phone,
+            "نقیب الله وزیری",
+            "ولسوالی چهاربولک، افغانستان",
+            "+93778016161",
+            None
+        )
 
 
+    elif button_id=="mazar":
+
+        send_sales(
+            phone,
+            "آرین شراف",
+            "شهر مزارشریف، ولایت بلخ، افغانستان",
+            "+93786551516",
+            None
+        )
+
+
+    elif button_id=="helmand":
+
+        send_sales(
+            phone,
+            "عبدالله هلمندی",
+            "ولایت هلمند، افغانستان",
+            "+93705513709",
+            None
+        )
+
+
+    elif button_id=="baghlan":
+
+        send_sales(
+            phone,
+            "ضیالحق بغلان",
+            "ولایت بغلان، افغانستان",
+            "+93700228685",
+            None
+        )
+
+
+    elif button_id=="dawlatabad":
+
+        send_sales(
+            phone,
+            "پیر محمد",
+            "ولسوالی دولت‌آباد، ولایت فاریاب، افغانستان",
+            "+93788038543",
+            None
+        )
+
+    
     # کارشناسان
 
     elif button_id=="experts":
