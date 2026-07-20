@@ -508,9 +508,7 @@ def handle_button(phone, button_id):
         data = {
 
             "messaging_product": "whatsapp",
-
             "to": phone,
-
             "type": "interactive",
 
             "interactive": {
@@ -528,7 +526,6 @@ def handle_button(phone, button_id):
                     "sections": [
 
                         {
-
                             "title": "مراکز فروش",
 
                             "rows": [
@@ -538,50 +535,47 @@ def handle_button(phone, button_id):
                                     "title": "جلال‌آباد",
                                     "description": "داکتر امرالله صافی"
                                 },
+
                                 {
                                     "id": "faryab",
                                     "title": "فاریاب",
                                     "description": "حاجی محب الله"
                                 },
+
                                 {
                                     "id": "kunduz",
                                     "title": "کندز",
                                     "description": "قاری شکرالله"
                                 },
+
                                 {
                                     "id": "mazar",
                                     "title": "مزارشریف",
                                     "description": "آرین شراف"
                                 },
+
                                 {
                                     "id": "charbolak",
                                     "title": "چهاربولک",
                                     "description": "نقیب الله وزیری"
                                 },
+
                                 {
                                     "id": "dawlatabad",
                                     "title": "دولت‌آباد",
                                     "description": "پیر محمد"
                                 },
+
                                 {
                                     "id": "baghlan",
                                     "title": "بغلان",
                                     "description": "ضیالحق بغلان"
                                 },
+
                                 {
                                     "id": "helmand",
                                     "title": "هلمند",
                                     "description": "عبدالله هلمندی"
-                                },
-                                {
-                                    "id": "kabul",
-                                    "title": "کابل",
-                                    "description": "مرکز فروش کابل"
-                                },
-                                {
-                                    "id": "herat",
-                                    "title": "هرات",
-                                    "description": "نمایندگی هرات"
                                 }
 
                             ]
@@ -596,9 +590,7 @@ def handle_button(phone, button_id):
 
         }
 
-    }
-
-    send_message(data)
+        send_message(data)
 
 
 
