@@ -502,21 +502,19 @@ def handle_button(phone, button_id):
 
     # فروشات
 
-elif button_id == "sales":
+    elif button_id == "sales":
 
-    print("SALES MENU CLICKED")
-
-    send_text(
-        phone,
-        """
+        send_text(
+            phone,
+            """
 🏪 محل فروشات درخشان گروپ
 
 برای سفارش و معلومات با دفتر مرکزی تماس بگیرید:
 
 📞 +93704012659
 """
-    )
-        send_message(data)
+        )
+
 
 
     elif button_id=="jalalabad":
