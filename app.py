@@ -1,9 +1,70 @@
 from flask import Flask, request
 import requests
 import os
+import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 
+# دیتابیس سفارشات
+
+def init_db():
+
+    conn = sqlite3.connect("orders.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS orders (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        phone TEXT,
+
+        product TEXT,
+
+        date TEXT
+
+    )
+    """)
+
+    conn.commit()
+
+    conn.close()
+
+
+
+init_db()
+
+
+
+# ذخیره سفارش
+
+def save_order(phone, product):
+
+    conn = sqlite3.connect("orders.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO orders
+        (phone, product, date)
+
+        VALUES (?, ?, ?)
+        """,
+
+        (
+            phone,
+            product,
+            datetime.now().strftime("%Y-%m-%d %H:%M")
+        )
+    )
+
+    conn.commit()
+
+    conn.close()
+    
 
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
 WHATSAPP_TOKEN = os.environ.get("WHATSAPP_TOKEN")
@@ -1088,6 +1149,7 @@ def send_product(phone, image, name, price):
     }
 
     print("SENDING PRODUCT:", data)
+    save_order(phone, name)
     send_message(data)
 
 
