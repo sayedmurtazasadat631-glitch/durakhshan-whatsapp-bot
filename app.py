@@ -196,11 +196,10 @@ def webhook():
 
         # پیام متنی
 
-        if "text" in message:
+        if "interactive" not in message and "text" in message:
 
 
-            text=message["text"]["body"].lower()
-
+            text = message["text"]["body"].lower()
 
 
             if (
