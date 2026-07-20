@@ -3,6 +3,7 @@ import requests
 import os
 import sqlite3
 from datetime import datetime
+from urllib.parse import quote
 
 app = Flask(__name__)
 
