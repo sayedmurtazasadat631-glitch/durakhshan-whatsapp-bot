@@ -492,13 +492,13 @@ def handle_button(phone, button_id):
 
 
 
-# فروشات
+    # فروشات
 
-elif button_id=="sales":
+    elif button_id=="sales":
 
-    data = {
+        data = {
 
-        "messaging_product":"whatsapp",
+            "messaging_product":"whatsapp",
 
         "to":phone,
 
