@@ -271,6 +271,9 @@ def webhook():
             print("TEXT:", text)
 
 
+
+            # گزارش فروش مدیر
+
             if text == "گزارش فروش":
 
                 if phone in ADMIN_NUMBERS:
@@ -286,6 +289,48 @@ def webhook():
 
                 return "OK", 200
 
+            # ثبت سفارش مشتری
+
+            if (
+                "سفارش" in text
+                or "میخواهم" in text
+                or "می خواهم" in text
+            ):
+
+                product_name = text.replace(
+                    "سلام، میخواهم",
+                    ""
+                ).replace(
+                    "سلام میخواهم",
+                    ""
+                ).replace(
+                    "را سفارش دهم",
+                    ""
+                ).strip()
+
+
+                save_order(
+                    phone,
+                    product_name
+                )
+
+
+                send_text(
+                    phone,
+                    """
+✅ سفارش شما ثبت شد.
+
+📦 محصول انتخابی شما دریافت گردید.
+
+کارمندان درخشان گروپ به زودی جهت تکمیل سفارش با شما تماس می‌گیرند.
+
+تشکر از اعتماد شما 🌱
+"""
+                )
+
+
+                return "OK", 200
+
 
 
             if (
@@ -293,6 +338,8 @@ def webhook():
                 or "hello" in text
                 or "hi" in text
             ):
+
+
 
                 main_menu(phone)
 
@@ -1172,7 +1219,7 @@ def send_product(phone, image, name, price):
     }
 
     print("SENDING PRODUCT:", data)
-    save_order(phone, name)
+    
     send_message(data)
 
 
