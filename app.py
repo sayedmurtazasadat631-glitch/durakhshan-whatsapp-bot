@@ -176,8 +176,8 @@ DG به شرکت درخشان گروپ خوش آمدید
 
 
 @app.route("/webhook", methods=["POST"])
-
 def webhook():
+
 
     data = request.get_json()
 
@@ -215,7 +215,7 @@ def webhook():
         # انتخاب از منو
 
 
-        elif "interactive" in message:
+        if "interactive" in message:
 
 
             interactive=message["interactive"]
