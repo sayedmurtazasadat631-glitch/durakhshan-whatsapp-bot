@@ -178,29 +178,31 @@ DG به شرکت درخشان گروپ خوش آمدید
 @app.route("/webhook", methods=["POST"])
 def webhook():
 
-
     data = request.get_json()
 
-    print("FULL MESSAGE:")
+    print("========== NEW MESSAGE ==========")
     print(data)
+    print("=================================")
 
     try:
 
 
-        message=data["entry"][0]["changes"][0]["value"]["messages"][0]
+        message = data["entry"][0]["changes"][0]["value"]["messages"][0]
 
+        print("MESSAGE:")
+        print(message)
 
-        phone=message["from"]
+        phone = message["from"]
 
 
 
         # پیام متنی
 
-        if "interactive" not in message and "text" in message:
-
+        if "text" in message:
 
             text = message["text"]["body"].lower()
 
+            print("TEXT:", text)
 
             if (
                 "سلام" in text
@@ -217,9 +219,11 @@ def webhook():
 
         if "interactive" in message:
 
+            print("INTERACTIVE FOUND")
 
-            interactive=message["interactive"]
+            interactive = message["interactive"]
 
+            print(interactive)
 
 
             if "list_reply" in interactive:
@@ -227,8 +231,7 @@ def webhook():
 
                 button_id = interactive["list_reply"]["id"]
                 
-                print("BUTTON ID RECEIVED:")
-                print(button_id)
+                print("BUTTON ID:", button_id)
 
                 
                 handle_button(
