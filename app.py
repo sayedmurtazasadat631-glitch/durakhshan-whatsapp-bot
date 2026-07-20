@@ -283,8 +283,6 @@ def webhook():
 
 
 
-            # گزارش فروش مدیر
-
             if text == "گزارش فروش":
 
                 if phone in ADMIN_NUMBERS:
@@ -299,6 +297,41 @@ def webhook():
                     )
 
                 return "OK", 200
+
+
+
+            if text == "گزارش امروز":
+
+                if phone in ADMIN_NUMBERS:
+
+                    send_today_report(phone)
+
+                else:
+
+                    send_text(
+                        phone,
+                        "❌ دسترسی ندارید."
+                    )
+
+                return "OK", 200
+
+
+
+            if text == "گزارش ماه":
+
+                if phone in ADMIN_NUMBERS:
+
+                    send_month_report(phone)
+
+                else:
+
+                    send_text(
+                        phone,
+                        "❌ دسترسی ندارید."
+                    )
+
+                return "OK", 200
+                
 
             # ثبت سفارش مشتری
 
@@ -1487,7 +1520,164 @@ def send_sales_report(phone):
         phone,
         report
     )
-    
+
+# گزارش فروش امروز
+
+def send_today_report(phone):
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    conn = sqlite3.connect("orders.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT product, COUNT(*)
+    FROM orders
+    WHERE day = ?
+    GROUP BY product
+    """, (today,))
+
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+
+    if not rows:
+
+        send_text(
+            phone,
+            "📊 امروز هیچ سفارشی ثبت نشده است."
+        )
+
+        return
+
+
+    report = """
+📊 گزارش فروش امروز
+درخشان گروپ
+
+"""
+
+
+    total = 0
+
+
+    for product, count in rows:
+
+        report += f"""
+📦 محصول:
+{product}
+
+🛒 تعداد سفارش:
+{count}
+
+----------------
+"""
+
+        total += count
+
+
+
+    report += f"""
+✅ مجموع سفارشات امروز:
+{total}
+
+📅 تاریخ:
+{today}
+"""
+
+
+    send_text(
+        phone,
+        report
+    )
+
+# گزارش فروش ماهانه
+
+def send_month_report(phone):
+
+    month = datetime.now().strftime("%Y-%m")
+
+
+    conn = sqlite3.connect("orders.db")
+
+    cursor = conn.cursor()
+
+
+    cursor.execute("""
+    SELECT product, COUNT(*)
+    FROM orders
+    WHERE month = ?
+    GROUP BY product
+    """, (month,))
+
+
+    rows = cursor.fetchall()
+
+
+    conn.close()
+
+
+
+    if not rows:
+
+        send_text(
+            phone,
+            "📊 این ماه هنوز سفارشی ثبت نشده است."
+        )
+
+        return
+
+
+
+    report = """
+📊 گزارش فروش ماهانه
+درخشان گروپ
+
+
+"""
+
+
+    total = 0
+
+
+    for product, count in rows:
+
+
+        report += f"""
+📦 محصول:
+{product}
+
+🛒 تعداد:
+{count}
+
+----------------
+"""
+
+
+        total += count
+
+
+
+    report += f"""
+
+✅ مجموع سفارشات ماه:
+{total}
+
+📅 ماه:
+{month}
+
+"""
+
+
+    send_text(
+        phone,
+        report
+    )
+
+
 
 @app.route("/")
 def home():
