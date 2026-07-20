@@ -225,9 +225,12 @@ def webhook():
             if "list_reply" in interactive:
 
 
-                button_id=interactive["list_reply"]["id"]
+                button_id = interactive["list_reply"]["id"]
+                
+                print("BUTTON ID RECEIVED:")
+                print(button_id)
 
-
+                
                 handle_button(
                     phone,
                     button_id
@@ -496,84 +499,84 @@ def handle_button(phone, button_id):
 
     # فروشات
 
-    elif button_id=="sales":
+    elif button_id == "sales":
 
         data = {
 
-            "messaging_product":"whatsapp",
+            "messaging_product": "whatsapp",
 
-            "to":phone,
+            "to": phone,
 
-            "type":"interactive",
+            "type": "interactive",
 
-            "interactive":{
+            "interactive": {
 
-                "type":"list",
+                "type": "list",
 
-                "body":{
+                "body": {
 
-                    "text":"🏭 لطفاً محل فروش نزدیک خود را انتخاب نمایید."
+                    "text": "🏭 لطفاً محل فروش نزدیک خود را انتخاب نمایید."
 
                 },
 
-                "action":{
+                "action": {
 
-                    "button":"انتخاب محل",
+                    "button": "انتخاب محل",
 
-                    "sections":[
+                    "sections": [
 
                         {
 
-                            "title":"مراکز فروش درخشان گروپ",
+                            "title": "مراکز فروش درخشان گروپ",
 
-                            "rows":[
+                            "rows": [
 
                                 {
-                                    "id":"jalalabad",
-                                    "title":"داکتر امرالله صافی",
-                                    "description":"ولایت جلال‌آباد"
+                                    "id": "jalalabad",
+                                    "title": "داکتر امرالله صافی",
+                                    "description": "ولایت جلال‌آباد"
                                 },
 
                                 {
-                                    "id":"faryab",
-                                    "title":"حاجی محب الله و امین الله راز",
-                                    "description":"ولایت فاریاب"
+                                    "id": "faryab",
+                                    "title": "حاجی محب الله و امین الله راز",
+                                    "description": "ولایت فاریاب"
                                 },
 
                                 {
-                                    "id":"kunduz",
-                                    "title":"قاری شکرالله خان",
-                                    "description":"ولایت کندز"
+                                    "id": "kunduz",
+                                    "title": "قاری شکرالله خان",
+                                    "description": "ولایت کندز"
                                 },
 
                                 {
-                                    "id":"charbolak",
-                                    "title":"نقیب الله وزیری",
-                                    "description":"ولسوالی چهاربولک"
+                                    "id": "charbolak",
+                                    "title": "نقیب الله وزیری",
+                                    "description": "ولسوالی چهاربولک"
                                 },
 
                                 {
-                                    "id":"mazar",
-                                    "title":"آرین شراف",
-                                    "description":"شهر مزارشریف، ولایت بلخ"
+                                    "id": "mazar",
+                                    "title": "آرین شراف",
+                                    "description": "شهر مزارشریف، ولایت بلخ"
                                 },
 
                                 {
-                                    "id":"helmand",
-                                    "title":"عبدالله هلمندی",
-                                    "description":"ولایت هلمند"
+                                    "id": "helmand",
+                                    "title": "عبدالله هلمندی",
+                                    "description": "ولایت هلمند"
                                 },
 
                                 {
-                                    "id":"baghlan",
-                                    "title":"ضیالحق بغلان",
-                                    "description":"ولایت بغلان"
+                                    "id": "baghlan",
+                                    "title": "ضیالحق بغلان",
+                                    "description": "ولایت بغلان"
                                 },
 
                                 {
-                                    "id":"dawlatabad",
-                                    "title":"پیر محمد",
-                                    "description":"دولت‌آباد، ولایت فاریاب"
+                                    "id": "dawlatabad",
+                                    "title": "پیر محمد",
+                                    "description": "دولت‌آباد، ولایت فاریاب"
                                 }
 
                             ]
@@ -590,7 +593,6 @@ def handle_button(phone, button_id):
 
 
         send_message(data)
-
 
 
     elif button_id=="jalalabad":
