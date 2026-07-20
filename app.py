@@ -491,76 +491,6 @@ def handle_button(phone, button_id):
         )
 
 
-    elif button_id=="expert_yasin":
-
-        send_expert(
-            phone,
-            "yasin.png",
-            "انجنیر محمد یاسین عزیزی",
-            "ولایت بلخ",
-            "لابراتوار و خاک‌شناسی",
-            "93781449095"
-        )
-
-
-    elif button_id=="expert_faiz":
-
-        send_expert(
-            phone,
-            "faiz.png",
-            "انجنیر فیض محمد خان",
-            "ولایت بلخ",
-            "مشاوره کشت و زراعت",
-            "93788730949"
-        )
-
-
-    elif button_id=="expert_ghafor":
-
-        send_expert(
-            phone,
-            "ghafor.png",
-            "انجنیر عبدالغفور بیتنی",
-            "ولایت بلخ",
-            "راهنمایی استفاده از محصولات زراعتی",
-            "93787833271"
-        )
-
-
-    elif button_id=="expert_asrar":
-
-        send_expert(
-            phone,
-            "asrar.png",
-            "انجنیر سید اسرار سادات",
-            "ولایت بلخ",
-            "راهنمایی استفاده از محصولات و حل مشکلات مزارع",
-            "93704012659"
-        )
-
-
-    elif button_id=="expert_rahmat":
-
-        send_expert(
-            phone,
-            "rahmat.png",
-            "انجنیر رحمت الله هیوادمل",
-            "ولایت هلمند",
-            "مشاوره کشت و زراعت و انتخاب کود مناسب",
-            "93700251198"
-        )
-
-
-    elif button_id=="expert_jamil":
-
-        send_expert(
-            phone,
-            "jamil.png",
-            "انجنیر عبدالجمیل حیدری",
-            "ولایت هلمند",
-            "مشاوره کشت و زراعت و انتخاب کود مناسب",
-            "93707271310"
-        )
 
     # فروشات
 
@@ -701,7 +631,9 @@ https://wa.me/93788038543
         data = {
 
             "messaging_product":"whatsapp",
+
             "to":phone,
+
             "type":"interactive",
 
             "interactive":{
@@ -709,55 +641,57 @@ https://wa.me/93788038543
                 "type":"list",
 
                 "body":{
-                    "text":"👨‍🌾 لطفاً کارشناس مورد نظر خود را انتخاب نمایید:"
+
+                    "text":"👨‍🌾 لطفاً کارشناس مورد نظر را انتخاب نمایید."
+
                 },
 
                 "action":{
 
-                    "button":"کارشناسان",
+                    "button":"انتخاب کارشناس",
 
                     "sections":[
 
                         {
 
-                            "title":"کارشناسان درخشان گروپ",
+                            "title":"کارشناسان زراعتی",
 
                             "rows":[
 
                                 {
-                                    "id":"expert_yasin",
-                                    "title":"👨‍🌾 انجنیر محمد یاسین عزیزی",
+                                    "id":"yasin",
+                                    "title":"انجنیر محمد یاسین عزیزی",
                                     "description":"لابراتوار و خاک‌شناسی"
                                 },
 
                                 {
-                                    "id":"expert_faiz",
-                                    "title":"👨‍🌾 انجنیر فیض محمد خان",
+                                    "id":"faiz",
+                                    "title":"انجنیر فیض محمد خان",
                                     "description":"مشاوره کشت و زراعت"
                                 },
 
                                 {
-                                    "id":"expert_ghafor",
-                                    "title":"👨‍🌾 انجنیر عبدالغفور بیتنی",
+                                    "id":"ghafor",
+                                    "title":"انجنیر عبدالغفور بیتنی",
                                     "description":"راهنمایی محصولات زراعتی"
                                 },
 
                                 {
-                                    "id":"expert_asrar",
-                                    "title":"👨‍🌾 انجنیر سید اسرار سادات",
+                                    "id":"esrar",
+                                    "title":"انجنیر سید اسرار سادات",
                                     "description":"حل مشکلات مزارع"
                                 },
 
                                 {
-                                    "id":"expert_rahmat",
-                                    "title":"👨‍🌾 انجنیر رحمت الله هیوادمل",
-                                    "description":"انتخاب کود مناسب"
+                                    "id":"hewad",
+                                    "title":"انجنیر رحمت الله هیوادمل",
+                                    "description":"مشاوره انتخاب کود"
                                 },
 
                                 {
-                                    "id":"expert_jamil",
-                                    "title":"👨‍🌾 انجنیر عبدالجمیل حیدری",
-                                    "description":"مشاوره کشت و زراعت"
+                                    "id":"jamil",
+                                    "title":"انجنیر عبدالجمیل حیدری",
+                                    "description":"مشاوره انتخاب کود"
                                 }
 
                             ]
@@ -773,6 +707,78 @@ https://wa.me/93788038543
         }
 
         send_message(data)
+
+
+    elif button_id=="yasin":
+
+        send_expert(
+            phone,
+            "yasin.png",
+            "انجنیر محمد یاسین عزیزی",
+            "ولایت بلخ",
+            "لابراتوار و خاک‌شناسی",
+            "93781449095"
+        )
+
+
+    elif button_id=="faiz":
+
+        send_expert(
+            phone,
+            "faiz.png",
+            "انجنیر فیض محمد خان",
+            "ولایت بلخ",
+            "مشاوره کشت و زراعت",
+            "93788730949"
+        )
+
+
+    elif button_id=="ghafor":
+
+        send_expert(
+            phone,
+            "ghafor.png",
+            "انجنیر عبدالغفور بیتنی",
+            "ولایت بلخ",
+            "راهنمایی استفاده از محصولات زراعتی",
+            "93787833271"
+        )
+
+
+    elif button_id=="esrar":
+
+        send_expert(
+            phone,
+            "esrar.png",
+            "انجنیر سید اسرار سادات",
+            "ولایت بلخ",
+            "حل مشکلات مزارع و مشاوره زراعتی",
+            "93704012659"
+        )
+
+
+    elif button_id=="hewad":
+
+        send_expert(
+            phone,
+            "hewad.png",
+            "انجنیر رحمت الله هیوادمل",
+            "ولایت هلمند",
+            "مشاوره کشت و انتخاب کود",
+            "93700251198"
+        )
+
+
+    elif button_id=="jamil":
+
+        send_expert(
+            phone,
+            "jamil.png",
+            "انجنیر عبدالجمیل حیدری",
+            "ولایت هلمند",
+            "مشاوره کشت و انتخاب کود",
+            "93707271310"
+        )
 
 
 
