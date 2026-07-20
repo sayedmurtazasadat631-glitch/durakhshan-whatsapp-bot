@@ -100,7 +100,7 @@ def main_menu(phone):
 
                 "text":
 """
-🌿 به درخشان گروپ خوش آمدید
+DG به شرکت درخشان گروپ خوش آمدید
 
 لطفاً بخش مورد نظر خود را انتخاب نمایید:
 """
@@ -491,6 +491,76 @@ def handle_button(phone, button_id):
         )
 
 
+    elif button_id=="expert_yasin":
+
+        send_expert(
+            phone,
+            "yasin.png",
+            "انجنیر محمد یاسین عزیزی",
+            "ولایت بلخ",
+            "لابراتوار و خاک‌شناسی",
+            "93781449095"
+        )
+
+
+    elif button_id=="expert_faiz":
+
+        send_expert(
+            phone,
+            "faiz.png",
+            "انجنیر فیض محمد خان",
+            "ولایت بلخ",
+            "مشاوره کشت و زراعت",
+            "93788730949"
+        )
+
+
+    elif button_id=="expert_ghafor":
+
+        send_expert(
+            phone,
+            "ghafor.png",
+            "انجنیر عبدالغفور بیتنی",
+            "ولایت بلخ",
+            "راهنمایی استفاده از محصولات زراعتی",
+            "93787833271"
+        )
+
+
+    elif button_id=="expert_asrar":
+
+        send_expert(
+            phone,
+            "asrar.png",
+            "انجنیر سید اسرار سادات",
+            "ولایت بلخ",
+            "راهنمایی استفاده از محصولات و حل مشکلات مزارع",
+            "93704012659"
+        )
+
+
+    elif button_id=="expert_rahmat":
+
+        send_expert(
+            phone,
+            "rahmat.png",
+            "انجنیر رحمت الله هیوادمل",
+            "ولایت هلمند",
+            "مشاوره کشت و زراعت و انتخاب کود مناسب",
+            "93700251198"
+        )
+
+
+    elif button_id=="expert_jamil":
+
+        send_expert(
+            phone,
+            "jamil.png",
+            "انجنیر عبدالجمیل حیدری",
+            "ولایت هلمند",
+            "مشاوره کشت و زراعت و انتخاب کود مناسب",
+            "93707271310"
+        )
 
     # فروشات
 
@@ -629,101 +699,80 @@ https://wa.me/93788038543
 
     elif button_id=="experts":
 
-        send_text(phone,
+        data = {
+        "messaging_product":"whatsapp",
+        "to":phone,
+        "type":"interactive",
 
-"""
-🌱 کارشناسان زراعتی درخشان گروپ
+        "interactive":{
 
-1️⃣ انجنیر محمد یاسین عزیزی
+            "type":"list",
 
-📍 ولایت بلخ
-🧑‍🔬 تخصص:
-لابراتوار و خاک‌شناسی
+            "body":{
+                "text":"👨‍🌾 لطفاً کارشناس مورد نظر خود را انتخاب نمایید:"
+            },
 
-📞 تماس:
-+93 781449095
-💬 واتساپ:
-https://wa.me/93781449095
+            "action":{
 
+                "button":"کارشناسان",
 
-━━━━━━━━━━━━━━
+                "sections":[
 
-2️⃣ انجنیر فیض محمد خان
-📍 ولایت بلخ
-🧑‍🔬 تخصص:
-مشاوره کشت و زراعت
+                    {
 
-📞 تماس:
-+93 78 873 0949
-💬 واتساپ:
-https://wa.me/93788730949
+                        "title":"کارشناسان درخشان گروپ",
 
-━━━━━━━━━━━━━━
+                        "rows":[
 
-3️⃣ انجنیر عبدالغفور بیتنی
-📍 ولایت بلخ
-🧑‍🔬 تخصص:
-راهنمایی استفاده از محصولات زراعتی
+                            {
+                                "id":"expert_yasin",
+                                "title":"👨‍🌾 انجنیر محمد یاسین عزیزی",
+                                "description":"لابراتوار و خاک‌شناسی"
+                            },
 
-📞 تماس:
-+93 78 783 3271
-💬 واتساپ:
-https://wa.me/93787833271
+                            {
+                                "id":"expert_faiz",
+                                "title":"👨‍🌾 انجنیر فیض محمد خان",
+                                "description":"مشاوره کشت و زراعت"
+                            },
 
-━━━━━━━━━━━━━━
+                            {
+                                "id":"expert_ghafor",
+                                "title":"👨‍🌾 انجنیر عبدالغفور بیتنی",
+                                "description":"راهنمایی محصولات زراعتی"
+                            },
 
+                            {
+                                "id":"expert_asrar",
+                                "title":"👨‍🌾 انجنیر سید اسرار سادات",
+                                "description":"حل مشکلات مزارع"
+                            },
 
-4️⃣ انجنیر سید اسرار سادات
+                            {
+                                "id":"expert_rahmat",
+                                "title":"👨‍🌾 انجنیر رحمت الله هیوادمل",
+                                "description":"انتخاب کود مناسب"
+                            },
 
-📍 ولایت بلخ
+                            {
+                                "id":"expert_jamil",
+                                "title":"👨‍🌾 انجنیر عبدالجمیل حیدری",
+                                "description":"مشاوره کشت و زراعت"
+                            }
 
-🧑‍🔬 تخصص:
-راهنمایی استفاده از محصولات و حل مشکلات مزارع
+                        ]
 
-📞 تماس:
-+93 70 401 2659
+                    }
 
-💬 واتساپ:
-https://wa.me/93704012659
+                ]
 
+            }
 
-━━━━━━━━━━━━━━
+        }
 
+    }
 
-5️⃣ انجنیر رحمت الله هیواد مل
-
-📍 ولایت هلمند
-
-🧑‍🔬 تخصص:
-مشاوره کشت و زراعت و انتخاب کود مناسب
-
-📞 تماس:
-+93 70 025 1198
-
-💬 واتساپ:
-https://wa.me/93700251198
-
-
-━━━━━━━━━━━━━━
-
-
-6️⃣ انجنیر عبدالجمیل حیدری
-
-📍 ولایت هلمند
-
-🧑‍🔬 تخصص:
-مشاوره کشت و زراعت و انتخاب کود مناسب
-
-📞 تماس:
-+93 70 727 1310
-
-💬 واتساپ:
-https://wa.me/93707271310
-
-
-🌿 درخشان گروپ؛ همراه مطمئن دهقانان افغانستان
-"""
-        )
+    send_message(data)
 
 
     # تماس
@@ -786,6 +835,50 @@ def send_product(phone, image, name, price):
 
     print("SENDING PRODUCT:", data)
     send_message(data)
+
+def send_expert(phone,image,name,province,specialty,whatsapp):
+
+    data = {
+        "messaging_product":"whatsapp",
+        "to":phone,
+        "type":"interactive",
+
+        "interactive":{
+
+            "type":"cta_url",
+
+            "header":{
+                "type":"image",
+                "image":{
+                    "link":f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
+                }
+            },
+
+            "body":{
+                "text":f"""👨‍🌾 {name}
+
+📍 {province}
+
+🎓 تخصص:
+{specialty}
+
+برای دریافت مشاوره تخصصی روی دکمه زیر کلیک نمایید."""
+            },
+
+            "action":{
+                "name":"cta_url",
+
+                "parameters":{
+                    "display_text":"💬 گفتگو با کارشناس",
+                    "url":f"https://wa.me/{whatsapp}"
+                }
+            }
+
+        }
+
+    }
+
+        send_message(data)
 
 @app.route("/")
 def home():
