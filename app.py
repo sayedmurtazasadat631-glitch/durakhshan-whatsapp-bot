@@ -677,6 +677,79 @@ def handle_button(phone, button_id):
             None
         )
 
+
+def send_sales(phone, name, location, whatsapp, image=None):
+
+    print("SALES BUTTON CLICKED:", name)
+
+        header = {
+            "type":"image",
+            "image":{
+                "link":f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
+            }
+        }
+
+    else:
+
+        header = None
+
+
+
+    data = {
+
+        "messaging_product":"whatsapp",
+
+        "to":phone,
+
+        "type":"interactive",
+
+        "interactive":{
+
+            "type":"cta_url",
+
+            "body":{
+
+                "text":f"""🏪 مرکز فروش درخشان گروپ
+
+
+👤 مسئول فروش:
+{name}
+
+
+📍 آدرس:
+{location}
+
+
+برای تماس مستقیم با این مرکز روی دکمه زیر کلیک نمایید."""
+
+            },
+
+            "action":{
+
+                "name":"cta_url",
+
+                "parameters":{
+
+                    "display_text":"💬 تماس واتساپ",
+
+                    "url": f"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم."
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    if header:
+
+        data["interactive"]["header"] = header
+
+
+    send_message(data)
+
     
     # کارشناسان
 
@@ -856,78 +929,6 @@ https://wa.me/93701660911
 """
         )
 
-
-def send_sales(phone, name, location, whatsapp, image=None):
-
-    if image:
-
-        header = {
-            "type":"image",
-            "image":{
-                "link":f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
-            }
-        }
-
-    else:
-
-        header = None
-
-
-
-    data = {
-
-        "messaging_product":"whatsapp",
-
-        "to":phone,
-
-        "type":"interactive",
-
-        "interactive":{
-
-            "type":"cta_url",
-
-            "body":{
-
-                "text":f"""🏪 مرکز فروش درخشان گروپ
-
-
-👤 مسئول فروش:
-{name}
-
-
-📍 آدرس:
-{location}
-
-
-برای تماس مستقیم با این مرکز روی دکمه زیر کلیک نمایید."""
-
-            },
-
-            "action":{
-
-                "name":"cta_url",
-
-                "parameters":{
-
-                    "display_text":"💬 تماس واتساپ",
-
-                    "url": f"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم."
-
-                }
-
-            }
-
-        }
-
-    }
-
-
-    if header:
-
-        data["interactive"]["header"] = header
-
-
-    send_message(data)
 
 
 def send_product(phone, image, name, price):
