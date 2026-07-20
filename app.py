@@ -576,8 +576,29 @@ def handle_button(phone, button_id):
                                     "id": "helmand",
                                     "title": "هلمند",
                                     "description": "عبدالله هلمندی"
-                                }
+                                {
+                                    "id": "factory_balkh",
+                                    "title": "🏭 فابریکه بلخ درخشان نمبر 2",
+                                    "description": "شاهراه مزار-شبرغان بلخ افغانستان"
+                                },
 
+                                {
+                                    "id": "factory_helmand",
+                                    "title": "🏭 درخشان نمبر 4 هلمند",
+                                    "description": "سرک نادعلی منطقه جمپ پوسته بولان هلمند"
+                                },
+
+                                {
+                                    "id": "factory_balkh",
+                                    "title": "🏭 درخشان نمبر 1 بلخ",
+                                    "description": "شاهراه مزارشبرغان- چهارسرکه ولسوالی بلخ"
+                                },
+
+                                {
+                                    "id": "factory_balkh",
+                                    "title": "🏭 درخشان نمبر 3 بلخ",
+                                    "description": "شاهراه مزار ولسوالی بلخ باغ اوراق"
+                                }
                             ]
 
                         }
