@@ -48,6 +48,8 @@ init_db()
 
 def save_order(phone, product):
 
+    print("ORDER SAVED:", phone, product)
+
     now = datetime.now()
 
     conn = sqlite3.connect("orders.db")
@@ -339,8 +341,9 @@ def webhook():
                 "سفارش" in text
                 or "میخواهم" in text
                 or "می خواهم" in text
+                or "order" in text
             ):
-
+                
                 product_name = text.replace(
                     "سلام، میخواهم",
                     ""
@@ -1256,7 +1259,7 @@ def send_product(phone, image, name, price):
                 "name": "cta_url",
                 "parameters": {
                     "display_text": "🛒 سفارش محصول",
-                    "url": f"https://wa.me/93704012659?text=سلام، میخواهم {name} را سفارش دهم."
+                    "url": f"https://wa.me/93704012659?text={quote('سفارش ' + name)}"
                 }
             }
         }
