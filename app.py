@@ -69,7 +69,13 @@ def save_order(phone, product):
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
 WHATSAPP_TOKEN = os.environ.get("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.environ.get("PHONE_NUMBER_ID")
+# مدیر سیستم
 
+ADMIN_NUMBERS = [
+
+    "93701660911"
+
+]
 
 GRAPH_URL = f"https://graph.facebook.com/v25.0/{PHONE_NUMBER_ID}/messages"
 
@@ -255,8 +261,7 @@ def webhook():
 
         phone = message["from"]
 
-
-
+        
         # پیام متنی
 
         if "text" in message:
@@ -264,6 +269,24 @@ def webhook():
             text = message["text"]["body"].lower()
 
             print("TEXT:", text)
+
+
+            if text == "گزارش فروش":
+
+                if phone in ADMIN_NUMBERS:
+
+                    send_sales_report(phone)
+
+                else:
+
+                    send_text(
+                        phone,
+                        "❌ شما دسترسی به گزارش فروش ندارید."
+                    )
+
+                return "OK", 200
+
+
 
             if (
                 "سلام" in text
