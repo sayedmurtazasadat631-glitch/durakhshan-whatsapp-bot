@@ -533,13 +533,11 @@ def handle_button(phone, button_id):
                                 {
                                     "id": "jalalabad",
                                     "title": "جلال‌آباد",
-                                    "description": "داکتر امرالله صافی"
                                 },
 
                                 {
                                     "id": "faryab",
                                     "title": "فاریاب",
-                                    "description": "حاجی محب الله"
                                 },
 
                                 {
@@ -551,55 +549,46 @@ def handle_button(phone, button_id):
                                 {
                                     "id": "mazar",
                                     "title": "مزارشریف",
-                                    "description": "آرین شراف"
                                 },
 
                                 {
                                     "id": "charbolak",
                                     "title": "چهاربولک",
-                                    "description": "نقیب الله وزیری"
                                 },
 
                                 {
                                     "id": "dawlatabad",
                                     "title": "دولت‌آباد",
-                                    "description": "پیر محمد"
                                 },
 
                                 {
                                     "id": "baghlan",
                                     "title": "بغلان",
-                                    "description": "ضیالحق بغلان"
                                 },
 
                                 {
                                     "id": "helmand",
                                     "title": "هلمند",
-                                    "description": "عبدالله هلمندی"
                                 },
 
                                 {
                                     "id": "factory_balkh2",
                                     "title": "🏭 درخشان نمبر 2 بلخ",
-                                    "description": "شاهراه مزار-شبرغان، بلخ افغانستان"
                                 },
 
                                 {
                                     "id": "factory_helmand4",
                                     "title": "🏭 درخشان نمبر 4 هلمند",
-                                    "description": "سرک نادعلی، منطقه جمپ پوسته بولان هلمند"
                                 },
 
                                 {
                                     "id": "factory_balkh1",
                                     "title": "🏭 درخشان نمبر 1 بلخ",
-                                    "description": "شاهراه مزارشبرغان، چهارسرکه ولسوالی بلخ"
                                 },
 
                                 {
                                     "id": "factory_balkh3",
                                     "title": "🏭 درخشان نمبر 3 بلخ",
-                                    "description": "شاهراه مزار، ولسوالی بلخ، باغ اوراق"
                                 }
 
                             ]
