@@ -1359,6 +1359,77 @@ def send_factory(phone, name, location):
 
     send_message(data)
     
+# گزارش فروش مدیر
+
+def send_sales_report(phone):
+
+    conn = sqlite3.connect("orders.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT product, COUNT(*)
+    FROM orders
+    GROUP BY product
+    """)
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+
+    if not rows:
+
+        send_text(
+            phone,
+            "📊 هنوز هیچ سفارشی ثبت نشده است."
+        )
+
+        return
+
+
+    report = """
+📊 گزارش فروش درخشان گروپ
+
+
+"""
+
+
+    total = 0
+
+
+    for product, count in rows:
+
+        report += f"""
+📦 محصول:
+{product}
+
+🛒 تعداد سفارش:
+{count}
+
+----------------
+"""
+
+        total += count
+
+
+
+    report += f"""
+
+✅ مجموع سفارشات:
+{total}
+
+📅 تاریخ گزارش:
+{datetime.now().strftime("%Y-%m-%d %H:%M")}
+
+"""
+
+
+    send_text(
+        phone,
+        report
+    )
+    
 
 @app.route("/")
 def home():
