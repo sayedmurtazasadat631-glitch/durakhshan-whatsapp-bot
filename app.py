@@ -1081,7 +1081,7 @@ def send_product(phone, image, name, price):
                 "name": "cta_url",
                 "parameters": {
                     "display_text": "🛒 سفارش محصول",
-                    "url": f"https://wa.me/93701660911?text=سلام، میخواهم {name} را سفارش دهم."
+                    "url": f"https://wa.me/93704012659?text=سلام، میخواهم {name} را سفارش دهم."
                 }
             }
         }
@@ -1200,7 +1200,7 @@ def send_sales(phone, name, location, whatsapp, image=None):
 
                     "display_text":"💬 تماس واتساپ",
 
-                    "url":"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم"
+                    "url": f"https://wa.me/93704012659?text=سلام، معلومات و سفارش از {name} در {location} را میخواهم."
 
                 }
 
@@ -1261,7 +1261,7 @@ def send_factory(phone, name, location):
 
                     "display_text": "💬 تماس واتساپ",
 
-                    "url": "https://wa.me/93704012659?text=سلام معلومات فابریکه درخشان گروپ را میخواهم"
+                    "url": f"https://wa.me/93704012659?text=سلام، معلومات {name} را میخواهم."
 
                 }
 
