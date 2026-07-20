@@ -682,12 +682,21 @@ def send_sales(phone, name, location, whatsapp, image=None):
 
     print("SALES BUTTON CLICKED:", name)
 
+
+    if image:
+
         header = {
+
             "type":"image",
+
             "image":{
+
                 "link":f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
+
             }
+
         }
+
 
     else:
 
@@ -720,9 +729,10 @@ def send_sales(phone, name, location, whatsapp, image=None):
 {location}
 
 
-برای تماس مستقیم با این مرکز روی دکمه زیر کلیک نمایید."""
+برای معلومات و سفارش کود درخشان گروپ روی دکمه زیر کلیک نمایید."""
 
             },
+
 
             "action":{
 
@@ -732,7 +742,7 @@ def send_sales(phone, name, location, whatsapp, image=None):
 
                     "display_text":"💬 تماس واتساپ",
 
-                    "url": f"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم."
+                    "url":"https://wa.me/93704012659?text=سلام%20معلومات%20و%20سفارش%20کود%20درخشان%20گروپ%20را%20میخواهم."
 
                 }
 
@@ -743,9 +753,14 @@ def send_sales(phone, name, location, whatsapp, image=None):
     }
 
 
+
     if header:
 
         data["interactive"]["header"] = header
+
+
+
+    print("SENDING SALES:", data)
 
 
     send_message(data)
