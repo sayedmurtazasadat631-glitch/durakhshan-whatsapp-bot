@@ -300,7 +300,7 @@ def webhook():
 
 
 
-            if text == "گزارش ماه":
+            if text == "گزارش ماهانه":
 
                 if phone in ADMIN_NUMBERS:
 
@@ -1383,12 +1383,19 @@ def send_product(phone, image, name, price, product_id=None):
 
 def notify_sales(phone, product):
 
-    sales_number = "93701660911"
+
+    sales_numbers = [
+
+        "93701660911",
+
+        "93704012659"
+
+    ]
 
 
     customer_link = f"https://wa.me/{phone}?text={quote('سلام، در مورد سفارش شما از درخشان گروپ تماس گرفتم.')}"
 
-
+    for sales_number in sales_numbers:
 
     data = {
 
