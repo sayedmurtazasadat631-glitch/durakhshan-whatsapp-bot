@@ -577,53 +577,33 @@ def handle_button(phone, button_id):
     elif button_id == "humic5":
 
         send_product(
-
             phone,
-
             "humic5.png",
-
             "🌿 هیومیک اسید ۵ لیتری",
-
             "500 افغانی",
-
             "humic5"
-
         )
-
 
 
     elif button_id == "humic10":
 
         send_product(
-
             phone,
-
             "humic10.png",
-
             "🌿 هیومیک اسید ۱۰ لیتری",
-
             "900 افغانی",
-
             "humic10"
-
         )
-
 
 
     elif button_id == "humic20":
 
         send_product(
-
             phone,
-
             "humic20.png",
-
             "🌿 هیومیک اسید ۲۰ لیتری",
-
             "1800 افغانی",
-
             "humic20"
-
         )
 
 
