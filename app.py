@@ -46,7 +46,9 @@ init_db()
 
 
 
-# ذخیره سفارش
+# ==============================
+# ذخیره سفارش در SQLite
+# ==============================
 
 def save_order(phone, product):
 
@@ -58,87 +60,201 @@ def save_order(phone, product):
 
     cursor = conn.cursor()
 
+
     cursor.execute(
         """
         INSERT INTO orders
-        (phone, product, date, day, month, year)
+        (
+        phone,
+        product,
+        date,
+        day,
+        month,
+        year
+        )
 
         VALUES (?, ?, ?, ?, ?, ?)
         """,
 
         (
+
             phone,
+
             product,
-            now.strftime("%Y-%m-%d %H:%M"),
+
+            now.strftime("%Y-%m-%d %H:%M:%S"),
+
             now.strftime("%Y-%m-%d"),
+
             now.strftime("%Y-%m"),
+
             now.strftime("%Y")
+
         )
     )
+
 
     conn.commit()
 
     conn.close()
-    
 
+
+
+# ==============================
 # ذخیره سفارش در Excel
+# ==============================
+
 
 def save_order_excel(phone, product):
 
+
     file = "orders.xlsx"
+
 
     now = datetime.now()
 
 
-    if not os.path.exists(file):
 
-        wb = Workbook()
-
-        ws = wb.active
-
-        ws.title = "Orders"
+    try:
 
 
-        ws.append([
-            "شماره",
-            "تلفن مشتری",
-            "محصول",
-            "تاریخ",
-            "روز",
-            "ماه",
-            "سال"
-        ])
+        # اگر فایل وجود ندارد بساز
+
+        if not os.path.exists(file):
+
+
+            wb = Workbook()
+
+            ws = wb.active
+
+            ws.title = "Orders"
+
+
+
+            ws.append(
+
+                [
+
+                    "شماره سفارش",
+
+                    "شماره مشتری",
+
+                    "محصول",
+
+                    "تاریخ و ساعت",
+
+                    "روز",
+
+                    "ماه",
+
+                    "سال"
+
+                ]
+
+            )
+
+
+            # تنظیم عرض ستون ها
+
+            ws.column_dimensions["A"].width = 15
+
+            ws.column_dimensions["B"].width = 20
+
+            ws.column_dimensions["C"].width = 30
+
+            ws.column_dimensions["D"].width = 22
+
+            ws.column_dimensions["E"].width = 15
+
+            ws.column_dimensions["F"].width = 15
+
+            ws.column_dimensions["G"].width = 12
+
+
+            ws.freeze_panes = "A2"
+
+
+            wb.save(file)
+
+
+
+        # باز کردن فایل
+
+        wb = load_workbook(file)
+
+
+        ws = wb["Orders"]
+
+
+
+        # شماره سفارش واقعی
+
+        order_number = ws.max_row
+
+
+
+        if order_number == 1:
+
+            order_number = 1
+
+
+
+        else:
+
+            order_number = ws.max_row
+
+
+
+        # اضافه کردن سفارش
+
+
+        ws.append(
+
+            [
+
+                order_number,
+
+                phone,
+
+                product,
+
+                now.strftime("%Y-%m-%d %H:%M:%S"),
+
+                now.strftime("%Y-%m-%d"),
+
+                now.strftime("%Y-%m"),
+
+                now.strftime("%Y")
+
+            ]
+
+        )
 
 
         wb.save(file)
 
 
 
-    wb = load_workbook(file)
+        print("==============================")
 
-    ws = wb["Orders"]
+        print("✅ ORDER EXCEL SAVED")
 
+        print("🆔 NUMBER:", order_number)
 
-    number = ws.max_row
+        print("📦 PRODUCT:", product)
 
+        print("📞 PHONE:", phone)
 
-    ws.append([
-
-        number,
-        phone,
-        product,
-        now.strftime("%Y-%m-%d %H:%M"),
-        now.strftime("%Y-%m-%d"),
-        now.strftime("%Y-%m"),
-        now.strftime("%Y")
-
-    ])
+        print("==============================")
 
 
-    wb.save(file)
+
+    except Exception as e:
 
 
-    print("EXCEL SAVED:", product)
+        print("❌ EXCEL ERROR:")
+
+        print(e)
     
 
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
