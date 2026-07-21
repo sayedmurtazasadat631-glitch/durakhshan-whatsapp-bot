@@ -574,47 +574,78 @@ def handle_button(phone, button_id):
         send_message(data)
 
 
-    elif button_id=="humic5":
+    elif button_id == "humic5":
 
         send_product(
+
             phone,
+
             "humic5.png",
+
             "🌿 هیومیک اسید ۵ لیتری",
-            "500 افغانی"
+
+            "500 افغانی",
+
+            "humic5"
+
         )
 
 
-    elif button_id=="humic10":
+
+    elif button_id == "humic10":
 
         send_product(
+
             phone,
+
             "humic10.png",
+
             "🌿 هیومیک اسید ۱۰ لیتری",
-            "900 افغانی"
+
+            "900 افغانی",
+
+            "humic10"
+
         )
 
 
-    elif button_id=="humic20":
+
+    elif button_id == "humic20":
 
         send_product(
+
             phone,
+
             "humic20.png",
+
             "🌿 هیومیک اسید ۲۰ لیتری",
-            "1800 افغانی"
+
+            "1800 افغانی",
+
+            "humic20"
+
         )
-    
+
+
+
     # NPK
 
 
-    elif button_id=="npk":
+    elif button_id == "npk":
 
         send_product(
-            phone,
-            "NPK.png",
-            "🌱 کود فوق العاده NPK",
-            "۲۰۰ افغانی"
-        )
 
+            phone,
+
+            "NPK.png",
+
+            "🌱 کود فوق العاده NPK",
+
+            "۲۰۰ افغانی",
+
+            "npk"
+
+        )
 
     # پنبه
 
@@ -1281,9 +1312,10 @@ https://wa.me/93701660911
         )
 
 
-def send_product(phone, image, name, price):
+def send_product(phone, image, name, price, product_id):
 
     data = {
+
         "messaging_product": "whatsapp",
         "to": phone,
         "type": "interactive",
@@ -1293,35 +1325,63 @@ def send_product(phone, image, name, price):
             "type": "button",
 
             "header": {
+
                 "type": "image",
+
                 "image": {
+
                     "link": f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
+
                 }
+
             },
+
 
             "body": {
-                "text": f"""🌿 {name}
 
-💰 قیمت: {price}
+                "text": f"""
+🌿 {name}
 
-برای ثبت سفارش روی دکمه زیر کلیک نمایید."""
+
+💰 قیمت:
+{price}
+
+
+کود فوق العاده درخشان گروپ
+
+
+برای ثبت سفارش روی دکمه زیر کلیک نمایید.
+"""
+
             },
 
+
             "action": {
+
                 "buttons": [
+
                     {
+
                         "type": "reply",
+
                         "reply": {
-                            product = button_id.replace("order_", "")
-                            "title": "🛒 سفارش"
+
+                            "id": f"order_{product_id}",
+
+                            "title": "🛒 ثبت سفارش"
+
                         }
+
                     }
+
                 ]
+
             }
 
         }
 
     }
+
 
     print("SENDING PRODUCT:", data)
 
