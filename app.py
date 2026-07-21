@@ -1403,30 +1403,28 @@ def send_product(phone, image, name, price):
 
 def notify_sales(phone, product):
 
-
     sales_number = "93701660911"
+
+
+    customer_link = f"https://wa.me/{phone}?text={quote('سلام، در مورد سفارش شما از درخشان گروپ تماس گرفتم.')}"
+
 
 
     data = {
 
+        "messaging_product": "whatsapp",
 
-        "messaging_product":"whatsapp",
+        "to": sales_number,
 
-        "to":sales_number,
+        "type": "interactive",
 
-        "type":"interactive",
+        "interactive": {
 
+            "type": "cta_url",
 
-        "interactive":{
+            "body": {
 
-
-            "type":"cta_url",
-
-
-            "body":{
-
-
-                "text":f"""
+                "text": f"""
 🛒 سفارش جدید درخشان گروپ
 
 
@@ -1440,36 +1438,27 @@ def notify_sales(phone, product):
 +{phone}
 
 
-برای تکمیل سفارش روی دکمه زیر کلیک کنید.
+برای تکمیل سفارش با مشتری تماس بگیرید.
 """
-
 
             },
 
 
-            "action":{
+            "action": {
 
+                "name": "cta_url",
 
-                "name":"cta_url",
+                "parameters": {
 
+                    "display_text": "💬 پاسخ مشتری",
 
-                "parameters":{
-
-
-                    "display_text":"💬 پاسخ مشتری",
-
-
-                    "url":f"https://wa.me/{phone}?text={quote('سلام، در مورد سفارش شما از درخشان گروپ تماس گرفتم.')}"
-
+                    "url": customer_link
 
                 }
 
-
             }
 
-
         }
-
 
     }
 
