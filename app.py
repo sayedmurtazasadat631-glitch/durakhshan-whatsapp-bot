@@ -1,5 +1,6 @@
 from flask import Flask, request
 import requests
+from openpyxl import Workbook, load_workbook
 import os
 import sqlite3
 from datetime import datetime
@@ -78,6 +79,66 @@ def save_order(phone, product):
     conn.commit()
 
     conn.close()
+    
+
+# ذخیره سفارش در Excel
+
+def save_order_excel(phone, product):
+
+    file = "orders.xlsx"
+
+    now = datetime.now()
+
+
+    if not os.path.exists(file):
+
+        wb = Workbook()
+
+        ws = wb.active
+
+        ws.title = "Orders"
+
+
+        ws.append([
+            "شماره",
+            "تلفن مشتری",
+            "محصول",
+            "تاریخ",
+            "روز",
+            "ماه",
+            "سال"
+        ])
+
+
+        wb.save(file)
+
+
+
+    wb = load_workbook(file)
+
+    ws = wb["Orders"]
+
+
+    number = ws.max_row
+
+
+    ws.append([
+
+        number,
+        phone,
+        product,
+        now.strftime("%Y-%m-%d %H:%M"),
+        now.strftime("%Y-%m-%d"),
+        now.strftime("%Y-%m"),
+        now.strftime("%Y")
+
+    ])
+
+
+    wb.save(file)
+
+
+    print("EXCEL SAVED:", product)
     
 
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
@@ -361,8 +422,12 @@ def webhook():
                     phone,
                     product_name
                 )
-
-
+ 
+                save_order_excel(
+                   phone,
+                   product_name
+                )
+                    
                 send_text(
                     phone,
                     """
