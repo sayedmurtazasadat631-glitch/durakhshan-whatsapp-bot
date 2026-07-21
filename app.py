@@ -1312,7 +1312,7 @@ def send_product(phone, image, name, price):
                     {
                         "type": "reply",
                         "reply": {
-                            "id": f"order_{image.replace('.png','')}",
+                            product = button_id.replace("order_", "")
                             "title": "🛒 سفارش"
                         }
                     }
