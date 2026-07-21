@@ -1312,17 +1312,36 @@ https://wa.me/93701660911
         )
 
 
-def send_product(phone, image, name, price, product_id):
+def send_product(phone, image, name, price):
+
+
+    save_order(
+        phone,
+        name
+    )
+
+
+    notify_sales(
+        phone,
+        name
+    )
+
 
     data = {
 
+
         "messaging_product": "whatsapp",
+
         "to": phone,
+
         "type": "interactive",
+
 
         "interactive": {
 
-            "type": "button",
+
+            "type": "cta_url",
+
 
             "header": {
 
@@ -1347,10 +1366,75 @@ def send_product(phone, image, name, price, product_id):
 {price}
 
 
-کود فوق العاده درخشان گروپ
+✅ سفارش شما ثبت شد.
 
 
-برای ثبت سفارش روی دکمه زیر کلیک نمایید.
+📞 کارشناسان فروش درخشان گروپ به زودی با شما تماس می‌گیرند.
+"""
+
+            },
+
+
+            "action": {
+
+                "name": "cta_url",
+
+
+                "parameters": {
+
+                    "display_text": "💬 تماس با فروش",
+
+                    "url": f"https://wa.me/93704012659?text={quote('سلام، در مورد سفارش ' + name + ' معلومات میخواهم')}"
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    print("SENDING PRODUCT:", data)
+
+
+    send_message(data)
+
+
+def notify_sales(phone, product):
+
+    sales_number = "93701660911"
+
+
+    message = {
+
+        "messaging_product": "whatsapp",
+
+        "to": sales_number,
+
+        "type": "interactive",
+
+
+        "interactive": {
+
+            "type": "button",
+
+
+            "body": {
+
+                "text": f"""
+🛒 سفارش جدید درخشان گروپ
+
+
+📦 محصول:
+{product}
+
+
+📞 شماره مشتری:
++{phone}
+
+
+لطفاً جهت تکمیل سفارش با مشتری تماس بگیرید.
 """
 
             },
@@ -1366,9 +1450,9 @@ def send_product(phone, image, name, price, product_id):
 
                         "reply": {
 
-                            "id": f"order_{product_id}",
+                            "id": "customer_reply",
 
-                            "title": "🛒 ثبت سفارش"
+                            "title": "💬 پاسخ مشتری"
 
                         }
 
@@ -1383,10 +1467,7 @@ def send_product(phone, image, name, price, product_id):
     }
 
 
-    print("SENDING PRODUCT:", data)
-
-    send_message(data)
-
+    send_message(message)
 
 def send_expert(phone,image,name,province,specialty,whatsapp):
 
