@@ -1274,6 +1274,35 @@ def handle_button(phone, button_id):
             "93707271310"
         )
 
+    # ثبت سفارش محصول
+
+    elif button_id.startswith("order_"):
+
+        product = button_id.replace("order_", "")
+
+        save_order(
+            phone,
+            product
+        )
+
+        save_order_excel(
+            phone,
+            product
+        )
+
+        send_text(
+            phone,
+            f"""
+✅ سفارش شما با موفقیت ثبت شد.
+
+📦 محصول انتخابی:
+{product}
+
+📞 کارشناسان درخشان گروپ در کوتاه‌ترین زمان ممکن جهت تکمیل سفارش با شما تماس خواهند گرفت.
+
+🌱 از اعتماد شما سپاسگزاریم.
+"""
+        )
 
 
     # تماس
@@ -1297,42 +1326,50 @@ https://wa.me/93701660911
         )
 
 
-
 def send_product(phone, image, name, price):
 
     data = {
         "messaging_product": "whatsapp",
         "to": phone,
         "type": "interactive",
+
         "interactive": {
-            "type": "cta_url",
+
+            "type": "button",
+
             "header": {
                 "type": "image",
                 "image": {
                     "link": f"https://raw.githubusercontent.com/sayedmurtazasadat631-glitch/durakhshan-whatsapp-bot/main/{image}"
                 }
             },
+
             "body": {
                 "text": f"""🌿 {name}
 
 💰 قیمت: {price}
 
-کود فوق العاده درخشان گروپ
-
-جهت ثبت سفارش روی دکمه زیر کلیک نمایید."""
+برای ثبت سفارش روی دکمه زیر کلیک نمایید."""
             },
+
             "action": {
-                "name": "cta_url",
-                "parameters": {
-                    "display_text": "🛒 سفارش محصول",
-                    "url": f"https://wa.me/93704012659?text={quote('سفارش ' + name)}"
-                }
+                "buttons": [
+                    {
+                        "type": "reply",
+                        "reply": {
+                            "id": f"order_{name}",
+                            "title": "🛒 سفارش"
+                        }
+                    }
+                ]
             }
+
         }
+
     }
 
     print("SENDING PRODUCT:", data)
-    
+
     send_message(data)
 
 
