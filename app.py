@@ -1395,23 +1395,26 @@ def notify_sales(phone, product):
 
     customer_link = f"https://wa.me/{phone}?text={quote('سلام، در مورد سفارش شما از درخشان گروپ تماس گرفتم.')}"
 
+
+
     for sales_number in sales_numbers:
 
-    data = {
 
-        "messaging_product": "whatsapp",
+        data = {
 
-        "to": sales_number,
+            "messaging_product": "whatsapp",
 
-        "type": "interactive",
+            "to": sales_number,
 
-        "interactive": {
+            "type": "interactive",
 
-            "type": "cta_url",
+            "interactive": {
 
-            "body": {
+                "type": "cta_url",
 
-                "text": f"""
+                "body": {
+
+                    "text": f"""
 🛒 سفارش جدید درخشان گروپ
 
 
@@ -1428,18 +1431,20 @@ def notify_sales(phone, product):
 برای تکمیل سفارش با مشتری تماس بگیرید.
 """
 
-            },
+                },
 
 
-            "action": {
+                "action": {
 
-                "name": "cta_url",
+                    "name": "cta_url",
 
-                "parameters": {
+                    "parameters": {
 
-                    "display_text": "💬 پاسخ مشتری",
+                        "display_text": "💬 پاسخ مشتری",
 
-                    "url": customer_link
+                        "url": customer_link
+
+                    }
 
                 }
 
@@ -1447,10 +1452,8 @@ def notify_sales(phone, product):
 
         }
 
-    }
 
-
-    send_message(data)
+        send_message(data)
 
 
 def send_expert(phone,image,name,province,specialty,whatsapp):
