@@ -1,260 +1,63 @@
 from flask import Flask, request
 import requests
-from openpyxl import Workbook, load_workbook
 import os
-import sqlite3
 from datetime import datetime
 from urllib.parse import quote
 
 app = Flask(__name__)
 
-# دیتابیس سفارشات
-
-def init_db():
-
-    conn = sqlite3.connect("orders.db")
-
-    cursor = conn.cursor()
-
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS orders (
-
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-        phone TEXT,
-
-        product TEXT,
-
-        date TEXT,
-
-        day TEXT,
-
-        month TEXT,
-
-        year TEXT
-
-    )
-    """)
-
-    conn.commit()
-
-    conn.close()
+from supabase import create_client
 
 
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
-init_db()
+
+supabase = create_client(
+    SUPABASE_URL,
+    SUPABASE_KEY
+)
 
 
 
 # ==============================
-# ذخیره سفارش در SQLite
+# ذخیره سفارش در Supabase
 # ==============================
 
 def save_order(phone, product):
 
-    print("ORDER SAVED:", phone, product)
-
-    now = datetime.now()
-
-    conn = sqlite3.connect("orders.db")
-
-    cursor = conn.cursor()
-
-
-    cursor.execute(
-        """
-        INSERT INTO orders
-        (
-        phone,
-        product,
-        date,
-        day,
-        month,
-        year
-        )
-
-        VALUES (?, ?, ?, ?, ?, ?)
-        """,
-
-        (
-
-            phone,
-
-            product,
-
-            now.strftime("%Y-%m-%d %H:%M:%S"),
-
-            now.strftime("%Y-%m-%d"),
-
-            now.strftime("%Y-%m"),
-
-            now.strftime("%Y")
-
-        )
-    )
-
-
-    conn.commit()
-
-    conn.close()
-
-
-
-# ==============================
-# ذخیره سفارش در Excel
-# ==============================
-
-
-def save_order_excel(phone, product):
-
-
-    file = "orders.xlsx"
-
-
     now = datetime.now()
 
 
+    data = {
 
-    try:
+        "phone": phone,
 
+        "product": product,
 
-        # اگر فایل وجود ندارد بساز
+        "date": now.strftime("%Y-%m-%d %H:%M:%S"),
 
-        if not os.path.exists(file):
+        "day": now.strftime("%Y-%m-%d"),
 
+        "month": now.strftime("%Y-%m"),
 
-            wb = Workbook()
+        "year": now.strftime("%Y")
 
-            ws = wb.active
+    }
 
-            ws.title = "Orders"
 
+    result = supabase.table("orders").insert(data).execute()
 
 
-            ws.append(
+    print("==============================")
 
-                [
+    print("✅ SUPABASE ORDER SAVED")
 
-                    "شماره سفارش",
+    print("📞 PHONE:", phone)
 
-                    "شماره مشتری",
+    print("📦 PRODUCT:", product)
 
-                    "محصول",
-
-                    "تاریخ و ساعت",
-
-                    "روز",
-
-                    "ماه",
-
-                    "سال"
-
-                ]
-
-            )
-
-
-            # تنظیم عرض ستون ها
-
-            ws.column_dimensions["A"].width = 15
-
-            ws.column_dimensions["B"].width = 20
-
-            ws.column_dimensions["C"].width = 30
-
-            ws.column_dimensions["D"].width = 22
-
-            ws.column_dimensions["E"].width = 15
-
-            ws.column_dimensions["F"].width = 15
-
-            ws.column_dimensions["G"].width = 12
-
-
-            ws.freeze_panes = "A2"
-
-
-            wb.save(file)
-
-
-
-        # باز کردن فایل
-
-        wb = load_workbook(file)
-
-
-        ws = wb["Orders"]
-
-
-
-        # شماره سفارش واقعی
-
-        order_number = ws.max_row
-
-
-
-        if order_number == 1:
-
-            order_number = 1
-
-
-
-        else:
-
-            order_number = ws.max_row
-
-
-
-        # اضافه کردن سفارش
-
-
-        ws.append(
-
-            [
-
-                order_number,
-
-                phone,
-
-                product,
-
-                now.strftime("%Y-%m-%d %H:%M:%S"),
-
-                now.strftime("%Y-%m-%d"),
-
-                now.strftime("%Y-%m"),
-
-                now.strftime("%Y")
-
-            ]
-
-        )
-
-
-        wb.save(file)
-
-
-
-        print("==============================")
-
-        print("✅ ORDER EXCEL SAVED")
-
-        print("🆔 NUMBER:", order_number)
-
-        print("📦 PRODUCT:", product)
-
-        print("📞 PHONE:", phone)
-
-        print("==============================")
-
-
-
-    except Exception as e:
-
-
-        print("❌ EXCEL ERROR:")
-
-        print(e)
+    print("==============================")
     
 
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
@@ -521,7 +324,7 @@ def webhook():
                 or "می خواهم" in text
                 or "order" in text
             ):
-                
+
                 product_name = text.replace(
                     "سلام، میخواهم",
                     ""
@@ -538,22 +341,19 @@ def webhook():
                     phone,
                     product_name
                 )
- 
-                save_order_excel(
-                   phone,
-                   product_name
-                )
-                    
+
+
                 send_text(
                     phone,
-                    """
+                    f"""
 ✅ سفارش شما ثبت شد.
 
-📦 محصول انتخابی شما دریافت گردید.
+📦 محصول انتخابی:
+{product_name}
 
-کارمندان درخشان گروپ به زودی جهت تکمیل سفارش با شما تماس می‌گیرند.
+📞 کارمندان درخشان گروپ به زودی جهت تکمیل سفارش با شما تماس می‌گیرند.
 
-تشکر از اعتماد شما 🌱
+🌱 تشکر از اعتماد شما.
 """
                 )
 
@@ -1390,36 +1190,75 @@ def handle_button(phone, button_id):
             "93707271310"
         )
 
+
+    # ==============================
     # ثبت سفارش محصول
+    # ==============================
 
     elif button_id.startswith("order_"):
 
-        product = button_id.replace("order_", "")
+        product_id = button_id.replace(
+            "order_",
+            ""
+        )
+
+
+        product_names = {
+
+            "humic5":
+                "🌿 هیومیک اسید ۵ لیتری",
+
+            "humic10":
+                "🌿 هیومیک اسید ۱۰ لیتری",
+
+            "humic20":
+                "🌿 هیومیک اسید ۲۰ لیتری",
+
+            "NPK":
+                "🌱 کود فوق العاده NPK",
+
+            "npk":
+                "🌱 کود فوق العاده NPK"
+
+        }
+
+
+        product = product_names.get(
+            product_id,
+            product_id
+        )
+
 
         save_order(
             phone,
             product
         )
 
-        save_order_excel(
-            phone,
-            product
-        )
+
+        print("==============================")
+        print("🛒 NEW ORDER")
+        print("📞 PHONE:", phone)
+        print("📦 PRODUCT:", product)
+        print("==============================")
+
 
         send_text(
             phone,
             f"""
 ✅ سفارش شما با موفقیت ثبت شد.
 
+
 📦 محصول انتخابی:
+
 {product}
 
+
 📞 کارشناسان درخشان گروپ در کوتاه‌ترین زمان ممکن جهت تکمیل سفارش با شما تماس خواهند گرفت.
+
 
 🌱 از اعتماد شما سپاسگزاریم.
 """
         )
-
 
     # تماس
 
@@ -1473,7 +1312,7 @@ def send_product(phone, image, name, price):
                     {
                         "type": "reply",
                         "reply": {
-                            "id": f"order_{name}",
+                            "id": f"order_{image.replace('.png','')}",
                             "title": "🛒 سفارش"
                         }
                     }
@@ -1676,22 +1515,15 @@ def send_factory(phone, name, location):
 
 def send_sales_report(phone):
 
-    conn = sqlite3.connect("orders.db")
-
-    cursor = conn.cursor()
-
-    cursor.execute("""
-    SELECT product, COUNT(*)
-    FROM orders
-    GROUP BY product
-    """)
-
-    rows = cursor.fetchall()
-
-    conn.close()
+    result = supabase.table("orders") \
+        .select("product") \
+        .execute()
 
 
-    if not rows:
+    orders = result.data
+
+
+    if not orders:
 
         send_text(
             phone,
@@ -1699,6 +1531,24 @@ def send_sales_report(phone):
         )
 
         return
+
+
+
+    products = {}
+
+
+    for order in orders:
+
+        product = order["product"]
+
+        if product in products:
+
+            products[product] += 1
+
+        else:
+
+            products[product] = 1
+
 
 
     report = """
@@ -1711,7 +1561,7 @@ def send_sales_report(phone):
     total = 0
 
 
-    for product, count in rows:
+    for product, count in products.items():
 
         report += f"""
 📦 محصول:
@@ -1749,24 +1599,17 @@ def send_today_report(phone):
 
     today = datetime.now().strftime("%Y-%m-%d")
 
-    conn = sqlite3.connect("orders.db")
 
-    cursor = conn.cursor()
-
-    cursor.execute("""
-    SELECT product, COUNT(*)
-    FROM orders
-    WHERE day = ?
-    GROUP BY product
-    """, (today,))
+    result = supabase.table("orders") \
+        .select("product") \
+        .eq("day", today) \
+        .execute()
 
 
-    rows = cursor.fetchall()
-
-    conn.close()
+    orders = result.data
 
 
-    if not rows:
+    if not orders:
 
         send_text(
             phone,
@@ -1776,9 +1619,28 @@ def send_today_report(phone):
         return
 
 
+
+    products = {}
+
+
+    for order in orders:
+
+        product = order["product"]
+
+        if product in products:
+
+            products[product] += 1
+
+        else:
+
+            products[product] = 1
+
+
+
     report = """
 📊 گزارش فروش امروز
 درخشان گروپ
+
 
 """
 
@@ -1786,7 +1648,7 @@ def send_today_report(phone):
     total = 0
 
 
-    for product, count in rows:
+    for product, count in products.items():
 
         report += f"""
 📦 محصول:
@@ -1803,11 +1665,13 @@ def send_today_report(phone):
 
 
     report += f"""
+
 ✅ مجموع سفارشات امروز:
 {total}
 
 📅 تاریخ:
 {today}
+
 """
 
 
@@ -1816,6 +1680,10 @@ def send_today_report(phone):
         report
     )
 
+
+
+
+
 # گزارش فروش ماهانه
 
 def send_month_report(phone):
@@ -1823,27 +1691,16 @@ def send_month_report(phone):
     month = datetime.now().strftime("%Y-%m")
 
 
-    conn = sqlite3.connect("orders.db")
-
-    cursor = conn.cursor()
-
-
-    cursor.execute("""
-    SELECT product, COUNT(*)
-    FROM orders
-    WHERE month = ?
-    GROUP BY product
-    """, (month,))
+    result = supabase.table("orders") \
+        .select("product") \
+        .eq("month", month) \
+        .execute()
 
 
-    rows = cursor.fetchall()
+    orders = result.data
 
 
-    conn.close()
-
-
-
-    if not rows:
+    if not orders:
 
         send_text(
             phone,
@@ -1851,6 +1708,23 @@ def send_month_report(phone):
         )
 
         return
+
+
+
+    products = {}
+
+
+    for order in orders:
+
+        product = order["product"]
+
+        if product in products:
+
+            products[product] += 1
+
+        else:
+
+            products[product] = 1
 
 
 
@@ -1865,19 +1739,17 @@ def send_month_report(phone):
     total = 0
 
 
-    for product, count in rows:
-
+    for product, count in products.items():
 
         report += f"""
 📦 محصول:
 {product}
 
-🛒 تعداد:
+🛒 تعداد سفارش:
 {count}
 
 ----------------
 """
-
 
         total += count
 
@@ -1898,7 +1770,6 @@ def send_month_report(phone):
         phone,
         report
     )
-
 
 
 @app.route("/")
